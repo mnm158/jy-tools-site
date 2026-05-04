@@ -1,0 +1,16 @@
+[
+  {
+    "title": "网站上线记录",
+    "summary": "记录 JY工具站从空目录搭建到 GitHub + Cloudflare Pages 发布的过程。",
+    "date": "2026-05-04",
+    "category": "建站",
+    "url": "#"
+  },
+  {
+    "title": "如何新增一个插件下载入口",
+    "summary": "只需要编辑 content/plugins.json，补充插件名称、版本、说明和下载链接。",
+    "date": "2026-05-04",
+    "category": "教程",
+    "url": "#"
+  }
+]

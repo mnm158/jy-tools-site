@@ -1,0 +1,18 @@
+{
+  "siteName": "JY工具站",
+  "domain": "jyyyyy.dpdns.org",
+  "tagline": "收集、发布和记录好用的小工具。",
+  "intro": "这里会陆续放出个人插件、工具使用说明、更新记录和一些折腾经验，方便自己维护，也方便大家下载使用。",
+  "about": "这是一个从零开始维护的个人工具站，重点是让内容更新足够简单。你可以先把它当作个人主页、插件下载页和技术笔记入口。",
+  "footerText": "© 2026 JY工具站. Powered by GitHub and Cloudflare Pages.",
+  "socialLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/"
+    },
+    {
+      "name": "联系我",
+      "url": "mailto:hello@example.com"
+    }
+  ]
+}

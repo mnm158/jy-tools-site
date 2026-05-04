@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f9fe">
+    <meta
+      name="description"
+      content="JY工具站，一个用于发布个人插件、工具教程和技术记录的静态网站。"
+    >
+    <title>JY工具站</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav-wrap" aria-label="主导航">
+        <a class="brand" href="#home" aria-label="返回首页">
+          <span class="brand-mark" aria-hidden="true">JY</span>
+          <span class="brand-text" data-site-name>JY工具站</span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only">打开导航</span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-menu" id="nav-menu">
+          <a href="#home">首页</a>
+          <a href="#plugins">插件库</a>
+          <a href="#posts">文章</a>
+          <a href="#about">关于</a>
+        </div>
+
+        <div class="nav-tools">
+          <label class="search-box">
+            <span class="sr-only">搜索插件和文章</span>
+            <input id="site-search" type="search" placeholder="搜索插件 / 文章">
+          </label>
+          <button class="icon-button" id="theme-toggle" type="button" aria-label="切换深色模式" title="切换深色模式">
+            <span aria-hidden="true">◐</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section" id="home">
+        <div class="page-width hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow" data-domain>jyyyyy.dpdns.org</p>
+            <h1 data-hero-title>JY工具站</h1>
+            <p class="hero-tagline" data-tagline>收集、发布和记录好用的小工具。</p>
+            <p class="hero-intro" data-intro>
+              这里会陆续放出个人插件、工具使用说明、更新记录和一些折腾经验，方便自己维护，也方便大家下载使用。
+            </p>
+            <div class="hero-actions">
+              <a class="primary-action" href="#plugins">查看插件</a>
+              <a class="secondary-action" href="#posts">阅读文章</a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="工具站数据面板预览">
+            <canvas id="hero-canvas" width="760" height="520"></canvas>
+            <div class="visual-caption">
+              <span>插件发布</span>
+              <span>文章记录</span>
+              <span>GitHub 更新</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-width status-strip" aria-label="站点概览">
+        <div class="status-item">
+          <span class="status-number" data-plugin-count>0</span>
+          <span class="status-label">插件入口</span>
+        </div>
+        <div class="status-item">
+          <span class="status-number" data-post-count>0</span>
+          <span class="status-label">文章记录</span>
+        </div>
+        <div class="status-item">
+          <span class="status-number">GitHub</span>
+          <span class="status-label">网页编辑</span>
+        </div>
+        <div class="status-item">
+          <span class="status-number">Cloudflare</span>
+          <span class="status-label">自动发布</span>
+        </div>
+      </section>
+
+      <section class="page-section" id="plugins">
+        <div class="page-width">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Plugin Library</p>
+              <h2>插件库</h2>
+            </div>
+            <p>以后新增插件时，只需要编辑 <code>content/plugins.json</code>。</p>
+          </div>
+          <div class="plugin-grid" id="plugin-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="page-section tinted" id="posts">
+        <div class="page-width">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Notes</p>
+              <h2>文章与更新</h2>
+            </div>
+            <p>首版先做列表入口，后续可升级成 Markdown 博客。</p>
+          </div>
+          <div class="post-grid" id="post-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="page-section" id="about">
+        <div class="page-width about-grid">
+          <div>
+            <p class="eyebrow">About</p>
+            <h2>关于这个站点</h2>
+            <p class="about-text" data-about>
+              这是一个从零开始维护的个人工具站，重点是让内容更新足够简单。你可以先把它当作个人主页、插件下载页和技术笔记入口。
+            </p>
+            <div class="social-links" data-social-links></div>
+          </div>
+
+          <div class="guide-panel">
+            <h3>后续怎么改</h3>
+            <ul>
+              <li>改站点名称和简介：编辑 <code>content/site.json</code></li>
+              <li>新增插件：编辑 <code>content/plugins.json</code></li>
+              <li>新增文章入口：编辑 <code>content/posts.json</code></li>
+              <li>GitHub 保存后，Cloudflare Pages 会自动重新发布</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <span data-footer-text>© 2026 JY工具站</span>
+        <a href="#home">回到顶部</a>
+      </div>
+    </footer>
+
+    <noscript>
+      <div class="noscript-warning">
+        这个网站需要启用 JavaScript 才能读取插件和文章列表。
+      </div>
+    </noscript>
+  </body>
+</html>
