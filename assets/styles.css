@@ -707,6 +707,11 @@ code {
   background: #0f172a;
 }
 
+video.video-frame {
+  height: auto;
+  object-fit: contain;
+}
+
 .video-placeholder {
   display: grid;
   min-height: clamp(220px, 42vw, 430px);

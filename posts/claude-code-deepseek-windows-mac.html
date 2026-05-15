@@ -9,7 +9,7 @@
       content="Windows 和 macOS 上通过官方安装包部署 Claude Code 桌面端，并接入 DeepSeek 模型的完整教程。"
     >
     <title>Claude Code 桌面端部署与 DeepSeek 接入教程 - JY工具站</title>
-    <link rel="stylesheet" href="../assets/styles.css?v=20260515-2">
+    <link rel="stylesheet" href="../assets/styles.css?v=20260516-1">
     <script>
       (() => {
         const saved = window.localStorage.getItem("jy-theme");
@@ -59,24 +59,27 @@
 
         <section class="article-video" aria-label="配套视频">
           <div class="video-shell">
-            <iframe
+            <video
               class="video-frame"
-              src="https://www.youtube.com/embed/_gEUbQJ81hQ"
-              title="Mac 端 Claude Code 安装使用教程"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+              controls
+              preload="metadata"
+              playsinline
+              src="https://raw.githubusercontent.com/mnm158/jy-tools-site/media/claude-code-deepseek-desktop-tutorial.mp4"
+            >
+              你的浏览器暂不支持直接播放该视频，可以使用下方备用链接打开或下载。
+            </video>
           </div>
           <p class="video-note">
-            上方为 YouTube 原视频内嵌播放。国内网络如果无法打开，可以先查看下方文字教程；后续有 B 站、网盘或你自己的原始视频文件后，再替换为国内备用播放源。
+            上方为本站备用视频源，文件托管在 GitHub 独立 media 分支，避免 Cloudflare Pages 单文件大小限制。
           </p>
           <div class="video-fallback-card">
-            <span class="video-badge">国内备用源待上传</span>
+            <span class="video-badge">备用观看方式</span>
             <p>
-              由于该视频来自 YouTube，本站暂不重新上传第三方视频文件。你可以打开
+              如果播放器加载较慢，可以打开
+              <a href="https://raw.githubusercontent.com/mnm158/jy-tools-site/media/claude-code-deepseek-desktop-tutorial.mp4" target="_blank" rel="noopener">本站视频文件</a>
+              或
               <a href="https://www.youtube.com/watch?v=_gEUbQJ81hQ" target="_blank" rel="noopener">YouTube 原链接</a>
-              查看，或等待后续补充国内可访问版本。
+              查看。
             </p>
           </div>
         </section>
