@@ -4,3 +4,9 @@ node_modules/
 dist/
 .cache/
 插件存放位置/
+
+# 本地原始视频素材不要提交到 Cloudflare Pages 主分支
+*.mp4
+*.mov
+*.m4v
+*.webm
