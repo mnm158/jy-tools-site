@@ -21,34 +21,34 @@ const fallbackSite = {
 
 const fallbackPlugins = [
   {
-    name: "示例插件：效率工具箱",
-    version: "v0.1.0",
+    name: "抱箍夹具自动生成插件",
+    version: "v26.5.7",
     description:
-      "这是一个占位插件卡片。以后把它改成你的真实插件名称、说明和下载地址即可。",
-    platform: "Windows / macOS",
-    downloadUrl: "#",
-    updatedAt: "2026-05-04",
-    tags: ["示例", "效率", "插件"]
+      "AutoCAD 内输入关键参数后，自动生成抱箍和夹具的 1:1 剖视图、钢板图、孔/长孔、火曲线、垫块、钢印和组焊图，减少重复绘图和人工计算。",
+    platform: "AutoCAD / Windows",
+    downloadUrl: "downloads/baogu-jiaju-generator-v26.5.7.zip",
+    updatedAt: "2026-05-15",
+    tags: ["AutoCAD", "抱箍", "夹具", "放样"]
   },
   {
-    name: "示例插件：数据整理助手",
-    version: "v0.1.0",
+    name: "CAD孔径智能校验",
+    version: "v26.4.30",
     description:
-      "适合展示安装包、脚本、压缩包或 GitHub Releases 链接。下载按钮支持外链。",
-    platform: "跨平台",
-    downloadUrl: "#",
-    updatedAt: "2026-05-04",
-    tags: ["工具", "下载", "开源"]
+      "自动扫描 CAD 图纸中的 TEXT/MTEXT、零件轮廓和图形孔，识别圆孔、长孔、腰孔等写法，并对比钢印统计与实际孔径尺寸，快速发现孔径、数量和长孔尺寸错误。",
+    platform: "AutoCAD / Windows",
+    downloadUrl: "downloads/cad-hole-checker-v26.4.30.zip",
+    updatedAt: "2026-05-15",
+    tags: ["AutoCAD", "孔径校验", "钢印", "质检"]
   },
   {
-    name: "示例插件：CAD 小工具",
-    version: "v0.1.0",
+    name: "扁铁小图自动转化板图",
+    version: "v26.5.14",
     description:
-      "如果你后续发布专业插件，可以在这里写适用软件、使用场景和版本说明。",
-    platform: "Windows",
-    downloadUrl: "#",
-    updatedAt: "2026-05-04",
-    tags: ["CAD", "工作流", "示例"]
+      "自动扫描并识别扁铁小图，读取小图数据后一键生成 1:1 板图，同时识别切角数据，减少车间手画板图的时间和出错率。",
+    platform: "AutoCAD / Windows",
+    downloadUrl: "downloads/flatbar-drawing-generator-v26.5.14.zip",
+    updatedAt: "2026-05-15",
+    tags: ["AutoCAD", "扁铁", "板图", "自动生成"]
   }
 ];
 
@@ -204,7 +204,7 @@ function renderPlugins() {
             <span class="updated-at">${escapeHtml(plugin.updatedAt || "待更新")}</span>
             <a class="download-link" href="${escapeHtml(href)}" ${
         disabled ? 'aria-disabled="true"' : 'target="_blank" rel="noopener"'
-      }>下载</a>
+      }>${disabled ? "待上传" : "下载"}</a>
           </div>
         </article>
       `;
