@@ -12,6 +12,7 @@
 - `content/site.json`：网站名称、简介、关于、联系方式。
 - `content/plugins.json`：插件库列表。
 - `content/posts.json`：文章入口列表。
+- `downloads/`：放插件安装包、压缩包、LISP 文件等可下载文件。
 - `posts/`：完整文章页面。新增长文章时，可以复制里面已有的 HTML 文件再改内容。
 
 ## 怎么改网站标题和简介
@@ -52,8 +53,17 @@
 
 - GitHub Releases 下载链接
 - 网盘分享链接
-- 仓库里的安装包文件链接
+- 仓库里的安装包文件链接，例如 `downloads/my-plugin-v1.0.0.zip`
 - 暂时没有下载地址时填 `#`
+
+如果你想把插件文件直接放到这个网站里：
+
+1. 把插件文件上传到 `downloads/` 文件夹。
+2. 文件名建议用英文、数字和横线，例如 `cad-helper-v1.0.0.zip`。
+3. 在 `content/plugins.json` 里把 `downloadUrl` 改成 `downloads/cad-helper-v1.0.0.zip`。
+4. 提交到 GitHub 后，Cloudflare Pages 会自动发布，网站上的“下载”按钮就能下载这个文件。
+
+建议不要上传太大的文件。安装包、压缩包、LISP 脚本这类小文件可以直接放在仓库里；如果文件很大，后续建议改用 GitHub Releases 或网盘链接。
 
 ## 怎么新增一篇文章入口
 
