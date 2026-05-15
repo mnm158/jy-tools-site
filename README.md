@@ -12,6 +12,7 @@
 - `content/site.json`：网站名称、简介、关于、联系方式。
 - `content/plugins.json`：插件库列表。
 - `content/posts.json`：文章入口列表。
+- `posts/`：完整文章页面。新增长文章时，可以复制里面已有的 HTML 文件再改内容。
 
 ## 怎么改网站标题和简介
 
@@ -69,6 +70,12 @@
 ```
 
 首版只是文章入口列表。如果以后想写完整博客，可以继续升级成 Markdown 博客或接入 CMS。
+
+如果文章是本站里的页面，`url` 可以写成类似：
+
+```json
+"url": "posts/claude-code-deepseek-windows-mac.html"
+```
 
 ## 怎么发布到 Cloudflare Pages
 

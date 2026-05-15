@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f9fe">
+    <meta
+      name="description"
+      content="Windows 和 macOS 上部署 Claude Code 桌面端与命令行，并接入 DeepSeek 模型的完整教程。"
+    >
+    <title>Claude Code 桌面端部署与 DeepSeek 接入教程 - JY工具站</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+    <script>
+      (() => {
+        const saved = window.localStorage.getItem("jy-theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = saved || (prefersDark ? "dark" : "light");
+      })();
+    </script>
+  </head>
+  <body class="article-page">
+    <header class="site-header">
+      <nav class="nav-wrap article-nav" aria-label="主导航">
+        <a class="brand" href="../index.html#home" aria-label="返回首页">
+          <span class="brand-mark" aria-hidden="true">JY</span>
+          <span class="brand-text">JY工具站</span>
+        </a>
+
+        <div class="nav-menu">
+          <a href="../index.html#home">首页</a>
+          <a href="../index.html#plugins">插件库</a>
+          <a href="../index.html#posts">文章</a>
+          <a href="../index.html#about">关于</a>
+        </div>
+
+        <div class="nav-tools">
+          <a class="secondary-action compact-action" href="../index.html#posts">返回文章列表</a>
+          <button class="icon-button" id="article-theme-toggle" type="button" aria-label="切换深色模式" title="切换深色模式">
+            <span aria-hidden="true">◐</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <article class="article-shell">
+        <header class="article-hero">
+          <p class="eyebrow">Claude Code / DeepSeek</p>
+          <h1>Claude Code 桌面端如何在 Windows / Mac 上部署，并接入 DeepSeek 模型</h1>
+          <p class="article-lead">
+            这篇文章按小白也能跟着做的方式，把安装、验证、DeepSeek 环境变量配置、常见报错和配套视频脚本整理到一起。
+          </p>
+          <div class="article-meta">
+            <span>发布：2026-05-15</span>
+            <span>分类：AI 工具</span>
+            <span>适用：Windows 10+ / macOS 13+</span>
+          </div>
+        </header>
+
+        <section class="article-video" aria-label="配套视频">
+          <div class="video-shell">
+            <!-- 有视频后，把下面的占位区替换为 iframe 或 video 标签即可。 -->
+            <div class="video-placeholder">
+              <span class="video-badge">视频待上传</span>
+              <h2>Claude Code + DeepSeek 部署演示</h2>
+              <p>建议上传到 B 站、YouTube 或放到 GitHub Releases，然后把链接替换到这里。</p>
+            </div>
+          </div>
+          <p class="video-note">
+            如果你已经有视频链接，后续只需要替换本页 <code>article-video</code> 区域。录屏时不要展示真实 API Key。
+          </p>
+        </section>
+
+        <div class="article-layout">
+          <aside class="toc-panel" aria-label="文章目录">
+            <strong>目录</strong>
+            <a href="#what">先说明</a>
+            <a href="#mac">macOS 部署</a>
+            <a href="#windows">Windows 部署</a>
+            <a href="#deepseek">接入 DeepSeek</a>
+            <a href="#check">验证是否成功</a>
+            <a href="#trouble">常见问题</a>
+            <a href="#video-script">视频脚本</a>
+            <a href="#sources">参考资料</a>
+          </aside>
+
+          <div class="article-content">
+            <section id="what">
+              <h2>先说明：桌面端和 Claude Code 不是一回事</h2>
+              <p>
+                Anthropic 官方现在提供图形化桌面端，也提供 Claude Code 命令行工具。桌面端适合聊天和打开 Claude Code 体验；真正把请求切到 DeepSeek，主要是通过 Claude Code 命令行的环境变量完成。
+              </p>
+              <div class="callout">
+                <strong>推荐做法：</strong>
+                新手先安装桌面端，确认账号和基础环境没问题；然后安装 Claude Code 命令行，再配置 DeepSeek。
+              </div>
+            </section>
+
+            <section id="mac">
+              <h2>macOS 部署</h2>
+              <ol>
+                <li>打开 Anthropic 官方页面下载 macOS 桌面端，安装后登录账号。</li>
+                <li>打开“终端”，安装 Claude Code 命令行：</li>
+              </ol>
+              <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+              <p>如果你平时使用 Homebrew，也可以用下面的方式安装稳定版：</p>
+              <pre><code>brew install --cask claude-code</code></pre>
+              <p>安装完成后，检查版本：</p>
+              <pre><code>claude --version</code></pre>
+              <p>能看到版本号，就说明 Claude Code 已经装好。以后在项目文件夹里运行 <code>claude</code> 就能启动。</p>
+            </section>
+
+            <section id="windows">
+              <h2>Windows 部署</h2>
+              <ol>
+                <li>先安装 Windows 桌面端并登录。</li>
+                <li>建议安装 Git for Windows。官方说明里提到，原生 Windows 下有 Git Bash 会更适合 Claude Code 使用。</li>
+                <li>打开 PowerShell，执行安装命令：</li>
+              </ol>
+              <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+              <p>如果你习惯 WinGet，也可以使用：</p>
+              <pre><code>winget install Anthropic.ClaudeCode</code></pre>
+              <p>安装完成后检查版本：</p>
+              <pre><code>claude --version</code></pre>
+              <p>
+                如果你做的是 Linux 工具链项目，也可以选择 WSL 2。普通 Windows 软件、脚本、插件项目，用原生 Windows + Git for Windows 通常更直观。
+              </p>
+            </section>
+
+            <section id="deepseek">
+              <h2>接入 DeepSeek 模型</h2>
+              <p>
+                先到 DeepSeek Platform 创建 API Key。下面的命令里不要把 <code>&lt;your DeepSeek API Key&gt;</code> 原样复制，必须替换成你自己的 Key。
+              </p>
+
+              <h3>macOS 临时生效</h3>
+              <pre><code>export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_AUTH_TOKEN=&lt;your DeepSeek API Key&gt;
+export ANTHROPIC_MODEL=deepseek-v4-pro[1m]
+export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4-pro[1m]
+export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro[1m]
+export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash
+export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flash
+export CLAUDE_CODE_EFFORT_LEVEL=max</code></pre>
+
+              <h3>Windows PowerShell 临时生效</h3>
+              <pre><code>$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
+$env:ANTHROPIC_AUTH_TOKEN="&lt;your DeepSeek API Key&gt;"
+$env:ANTHROPIC_MODEL="deepseek-v4-pro[1m]"
+$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-v4-pro[1m]"
+$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-v4-pro[1m]"
+$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-v4-flash"
+$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-v4-flash"
+$env:CLAUDE_CODE_EFFORT_LEVEL="max"</code></pre>
+
+              <div class="callout warning">
+                <strong>注意：</strong>
+                临时环境变量只在当前终端窗口生效。确认能跑通以后，再考虑写入 <code>~/.zshrc</code>、PowerShell Profile 或系统环境变量。
+              </div>
+
+              <p>
+                DeepSeek 官方说明里，<code>deepseek-chat</code> 和 <code>deepseek-reasoner</code> 将在 2026-07-24 废弃；新配置优先使用 <code>deepseek-v4-pro</code> 和 <code>deepseek-v4-flash</code>。
+              </p>
+            </section>
+
+            <section id="check">
+              <h2>验证是否成功</h2>
+              <p>进入一个测试项目文件夹，然后启动 Claude Code：</p>
+              <pre><code>cd /path/to/my-project
+claude</code></pre>
+              <p>可以输入这句话测试：</p>
+              <pre><code>请读取当前项目结构，用中文总结这个项目是做什么的，不要修改文件。</code></pre>
+              <p>
+                如果它能正常回答，并且 DeepSeek 控制台里能看到 API 用量，就说明 Claude Code 已经走 DeepSeek 后端了。
+              </p>
+            </section>
+
+            <section id="trouble">
+              <h2>常见问题</h2>
+              <h3>1. Windows 提示命令不可用</h3>
+              <p>
+                先确认你用的是 PowerShell 还是 CMD。PowerShell 提示符一般以 <code>PS C:\</code> 开头，CMD 则没有 <code>PS</code>。两者安装命令不一样。
+              </p>
+
+              <h3>2. 输入 claude 后提示找不到命令</h3>
+              <p>
+                关闭终端重新打开，再执行 <code>claude --version</code>。如果还不行，检查安装过程有没有报错，或者 PATH 是否已经刷新。
+              </p>
+
+              <h3>3. API Key 不要放进项目文件</h3>
+              <p>
+                不要把真实 Key 写进文章、截图、视频或 GitHub 仓库。建议用环境变量保存，并在项目的 <code>.claude/settings.json</code> 里禁止读取 <code>.env</code> 等敏感文件。
+              </p>
+              <pre><code>{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)"
+    ]
+  }
+}</code></pre>
+
+              <h3>4. 模型名报错</h3>
+              <p>
+                优先检查 DeepSeek 平台当前支持的模型名和你的账号权限。如果 <code>deepseek-v4-pro[1m]</code> 不可用，可以先改成 <code>deepseek-v4-pro</code> 或 <code>deepseek-v4-flash</code> 验证。
+              </p>
+            </section>
+
+            <section id="video-script">
+              <h2>配套视频内容脚本</h2>
+              <ol>
+                <li>开场：说明本期做 Claude Code 桌面端安装，并把 Claude Code 请求切到 DeepSeek。</li>
+                <li>展示 macOS 安装：打开官网、安装桌面端、终端执行安装命令、运行 <code>claude --version</code>。</li>
+                <li>展示 Windows 安装：安装桌面端、说明 Git for Windows、PowerShell 执行安装命令。</li>
+                <li>展示 DeepSeek：进入平台创建 API Key，但录屏时遮住 Key。</li>
+                <li>复制环境变量：分别演示 macOS 和 Windows PowerShell 的配置。</li>
+                <li>进入测试项目运行 <code>claude</code>，让它只读取项目并总结，不修改文件。</li>
+                <li>结尾：提醒不要泄露 API Key，后续可把配置写入启动脚本或系统环境变量。</li>
+              </ol>
+            </section>
+
+            <section id="sources">
+              <h2>参考资料</h2>
+              <ul class="source-list">
+                <li><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Claude Code 官方安装文档</a></li>
+                <li><a href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noopener">Claude Code 环境变量文档</a></li>
+                <li><a href="https://code.claude.com/docs/en/settings" target="_blank" rel="noopener">Claude Code settings 文档</a></li>
+                <li><a href="https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code" target="_blank" rel="noopener">DeepSeek 官方 Claude Code 接入指南</a></li>
+                <li><a href="https://api-docs.deepseek.com/guides/anthropic_api" target="_blank" rel="noopener">DeepSeek Anthropic API 兼容说明</a></li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <span>© 2026 JY工具站. Powered by GitHub and Cloudflare Pages.</span>
+        <a href="../index.html#home">回到首页</a>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const toggle = document.querySelector("#article-theme-toggle");
+        const meta = document.querySelector('meta[name="theme-color"]');
+        const setTheme = (theme) => {
+          document.documentElement.dataset.theme = theme;
+          window.localStorage.setItem("jy-theme", theme);
+          meta?.setAttribute("content", theme === "dark" ? "#18171d" : "#f7f9fe");
+        };
+        toggle?.addEventListener("click", () => {
+          const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+          setTheme(next);
+        });
+      })();
+    </script>
+  </body>
+</html>

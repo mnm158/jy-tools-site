@@ -1,5 +1,12 @@
 [
   {
+    "title": "Claude Code 桌面端部署与 DeepSeek 接入教程",
+    "summary": "Windows 和 macOS 上安装 Claude Code，并通过环境变量接入 DeepSeek 模型，附配套录屏脚本。",
+    "date": "2026-05-15",
+    "category": "AI 工具",
+    "url": "posts/claude-code-deepseek-windows-mac.html"
+  },
+  {
     "title": "网站上线记录",
     "summary": "记录 JY工具站从空目录搭建到 GitHub + Cloudflare Pages 发布的过程。",
     "date": "2026-05-04",
