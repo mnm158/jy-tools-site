@@ -59,16 +59,26 @@
 
         <section class="article-video" aria-label="配套视频">
           <div class="video-shell">
-            <!-- 有视频后，把下面的占位区替换为 iframe 或 video 标签即可。 -->
-            <div class="video-placeholder">
-              <span class="video-badge">视频待上传</span>
-              <h2>Claude Code + DeepSeek 部署演示</h2>
-              <p>建议上传到 B 站、YouTube 或放到 GitHub Releases，然后把链接替换到这里。</p>
-            </div>
+            <iframe
+              class="video-frame"
+              src="https://www.youtube.com/embed/_gEUbQJ81hQ"
+              title="Mac 端 Claude Code 安装使用教程"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
           </div>
           <p class="video-note">
-            如果你已经有视频链接，后续只需要替换本页 <code>article-video</code> 区域。录屏时不要展示真实 API Key。
+            上方为 YouTube 原视频内嵌播放。国内网络如果无法打开，可以先查看下方文字教程；后续有 B 站、网盘或你自己的原始视频文件后，再替换为国内备用播放源。
           </p>
+          <div class="video-fallback-card">
+            <span class="video-badge">国内备用源待上传</span>
+            <p>
+              由于该视频来自 YouTube，本站暂不重新上传第三方视频文件。你可以打开
+              <a href="https://www.youtube.com/watch?v=_gEUbQJ81hQ" target="_blank" rel="noopener">YouTube 原链接</a>
+              查看，或等待后续补充国内可访问版本。
+            </p>
+          </div>
         </section>
 
         <div class="article-layout">
@@ -79,6 +89,7 @@
             <a href="#mac">macOS 安装</a>
             <a href="#windows">Windows 安装</a>
             <a href="#deepseek">接入 DeepSeek</a>
+            <a href="#usage">日常使用</a>
             <a href="#check">验证是否成功</a>
             <a href="#trouble">常见问题</a>
             <a href="#video-script">视频脚本</a>
@@ -137,6 +148,10 @@
               <p>
                 普通 Windows 软件、脚本、插件项目，用 Claude Desktop + Git for Windows 最直观。只有 Linux 工具链项目才优先考虑 WSL。
               </p>
+              <div class="callout">
+                <strong>和网上教程的差异：</strong>
+                有些 Windows 教程会让你先安装 Node.js 18+。按 Claude 官方桌面端快速开始文档，Code 标签页已经内置 Claude Code，不需要为了桌面端单独安装 Node.js 或 CLI。只有你要在终端里使用 <code>claude</code> 命令时，才需要另外安装 CLI。
+              </div>
             </section>
 
             <section id="deepseek">
@@ -168,8 +183,95 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 <code>&lt;your DeepSeek API Key&gt;</code> 必须换成你自己的 Key。录屏、截图、发文章时都要遮住真实 Key。
               </div>
 
+              <h3>Windows 可选：CC Desktop Switch 图形界面方案</h3>
+              <p>
+                如果你更想要“下载安装包、点按钮配置”的体验，可以了解 <a href="https://github.com/lonr-6/cc-desktop-switch" target="_blank" rel="noopener">CC Desktop Switch</a>。它是第三方开源工具，用来把 DeepSeek、Kimi、智谱等 Anthropic 兼容接口写入 Claude Desktop 的网关配置。
+              </p>
+              <ol>
+                <li>先完全退出 Claude Desktop。Windows 需要在系统托盘右键 Claude 图标，选择退出。</li>
+                <li>从 <a href="https://github.com/lonr-6/cc-desktop-switch/releases/latest" target="_blank" rel="noopener">CC Desktop Switch Releases</a> 下载 Windows Setup 安装包。</li>
+                <li>安装后打开工具，选择或新增 DeepSeek 提供商。</li>
+                <li>接口地址填 <code>https://api.deepseek.com/anthropic</code>，API Key 填你自己的 DeepSeek Key。</li>
+                <li>按需要启用 1M 上下文、Max 思考或模型映射选项。</li>
+                <li>点击应用到 Claude Desktop，按提示重启 Claude Desktop。</li>
+                <li>如果登录页出现 <strong>Continue with Gateway</strong>，选择它进入。</li>
+              </ol>
+              <div class="callout warning">
+                <strong>第三方工具提醒：</strong>
+                CC Desktop Switch 不是 Anthropic 官方产品。它的 GitHub 说明也提到 Windows 安装包可能没有 Authenticode 签名，安装时可能出现未知发布者提示。只从官方 GitHub Releases 下载，并确认你能接受这个风险后再使用。
+              </div>
+
+              <h3>Windows 可选：第三方推理配置入口</h3>
+              <p>
+                有些 Windows 教程提到，部分 Claude Code Desktop 版本可以在开发者模式里直接配置第三方推理服务。如果你的桌面端确实出现了这个入口，可以这样填；如果没有看到这个菜单，不要强行寻找，继续使用上面的 Local environment editor 即可。
+              </p>
+              <ol>
+                <li>在 Claude Desktop 菜单里进入 <strong>Help → Troubleshooting</strong>，查看是否有 <strong>Enable Developer Mode</strong>。</li>
+                <li>重启后如果出现 <strong>Developer → Configure Third-Party Inference</strong>，打开配置窗口。</li>
+                <li><strong>Gateway base URL</strong> 填 <code>https://api.deepseek.com/anthropic</code>。</li>
+                <li><strong>Gateway API key</strong> 填你的 DeepSeek API Key。</li>
+                <li><strong>Gateway auth scheme</strong> 选择 <code>bearer</code>。</li>
+                <li><strong>Model list</strong> 添加 <code>deepseek-v4-pro[1m]</code>，保存后重启 Claude Desktop。</li>
+              </ol>
+              <p>
+                这个入口不同版本、账号和企业配置下可能不一样，所以本文仍然把 Local environment editor 作为更稳妥的主流程。
+              </p>
+
               <p>
                 DeepSeek 官方说明里，<code>deepseek-chat</code> 和 <code>deepseek-reasoner</code> 将在 2026-07-24 废弃；新配置优先使用 <code>deepseek-v4-pro</code> 和 <code>deepseek-v4-flash</code>。
+              </p>
+            </section>
+
+            <section id="usage">
+              <h2>日常使用建议</h2>
+              <h3>先建一个测试工作目录</h3>
+              <p>
+                第一次使用 Code 模式时，不要直接授权桌面、下载目录或整个硬盘。建议新建一个测试文件夹，把要试的项目复制进去，再让 Claude 读取和修改这个文件夹。
+              </p>
+
+              <h3>权限模式怎么选</h3>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>模式</th>
+                      <th>适合场景</th>
+                      <th>新手建议</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ask permissions</td>
+                      <td>每次改文件或运行命令前都询问</td>
+                      <td>第一次使用优先选它</td>
+                    </tr>
+                    <tr>
+                      <td>Plan mode</td>
+                      <td>先分析、列计划，不直接动文件</td>
+                      <td>复杂任务先用它审方案</td>
+                    </tr>
+                    <tr>
+                      <td>Accept edits</td>
+                      <td>自动接受常规文件编辑</td>
+                      <td>熟悉项目后再用</td>
+                    </tr>
+                    <tr>
+                      <td>Bypass permissions</td>
+                      <td>尽量减少确认步骤，自动执行更多操作</td>
+                      <td>只在可重建的测试目录里用</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>模型和思考等级</h3>
+              <p>
+                日常写代码、查问题可以先用 <code>deepseek-v4-pro</code> 加 High 思考。简单问答、改小文本可以用 <code>deepseek-v4-flash</code> 控制成本。长链路调试、复杂项目迁移，再考虑 1M 上下文和 Max 思考。
+              </p>
+
+              <h3>API Key 和余额</h3>
+              <p>
+                DeepSeek API Key 创建后通常只显示一次，复制后要妥善保存。调用 API 会消耗余额，如果 Claude 能打开但一直报鉴权或额度错误，优先检查 Key 是否填错、账户是否有余额。
               </p>
             </section>
 
@@ -194,7 +296,17 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 安装 Git for Windows，安装完成后完全退出 Claude Desktop，再重新打开。
               </p>
 
-              <h3>3. API Key 不要放进项目文件</h3>
+              <h3>3. Virtual Machine Platform not available</h3>
+              <p>
+                这是 Windows 虚拟机平台功能没有开启。可以先按 Claude Desktop 或 Windows 提示打开“Windows 功能”，启用 <strong>Virtual Machine Platform</strong>，然后重启电脑。不会操作时，不建议直接复制管理员命令，先让熟悉 Windows 的人帮你确认。
+              </p>
+
+              <h3>4. CC Desktop Switch 应用后没变化</h3>
+              <p>
+                先确认 Claude Desktop 已经完全退出，而不是只关闭窗口。新版 CC Desktop Switch 默认通过本机网关工作，所以使用第三方提供商时也要让它留在后台运行。
+              </p>
+
+              <h3>5. API Key 不要放进项目文件</h3>
               <p>
                 不要把真实 Key 写进文章、截图、视频或 GitHub 仓库。建议用环境变量保存，并在项目的 <code>.claude/settings.json</code> 里禁止读取 <code>.env</code> 等敏感文件。
               </p>
@@ -208,12 +320,12 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
   }
 }</code></pre>
 
-              <h3>4. 模型名报错</h3>
+              <h3>6. 模型名报错</h3>
               <p>
                 优先检查 DeepSeek 平台当前支持的模型名和你的账号权限。如果 <code>deepseek-v4-pro[1m]</code> 不可用，可以先改成 <code>deepseek-v4-pro</code> 或 <code>deepseek-v4-flash</code> 验证。
               </p>
 
-              <h3>5. 仍然想用命令行怎么办</h3>
+              <h3>7. 仍然想用命令行怎么办</h3>
               <p>
                 命令行安装仍然是官方支持的备用方案，但这篇文章不把它作为主流程。你只想用安装包的话，按上面的 Claude Desktop 流程即可。
               </p>
@@ -228,6 +340,8 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 <li>展示 Windows 安装：下载、运行安装包、安装 Git for Windows、重启 Claude、进入 Code 标签页。</li>
                 <li>展示 DeepSeek：进入平台创建 API Key，但录屏时遮住 Key。</li>
                 <li>展示桌面端 Local 环境编辑器：逐条填写 DeepSeek 环境变量。</li>
+                <li>补充 Windows 可选路线：展示 CC Desktop Switch 下载、添加 DeepSeek、应用到 Claude Desktop。</li>
+                <li>讲清楚权限模式：新手先用 Ask permissions 或 Plan mode，不要一开始就开 Bypass permissions。</li>
                 <li>进入测试项目，让 Claude 只读取项目并总结，不修改文件。</li>
                 <li>结尾：提醒不要泄露 API Key，后续可把配置写入启动脚本或系统环境变量。</li>
               </ol>
@@ -243,6 +357,9 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 <li><a href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noopener">Claude Code 环境变量文档</a></li>
                 <li><a href="https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code" target="_blank" rel="noopener">DeepSeek 官方 Claude Code 接入指南</a></li>
                 <li><a href="https://api-docs.deepseek.com/guides/anthropic_api" target="_blank" rel="noopener">DeepSeek Anthropic API 兼容说明</a></li>
+                <li><a href="https://github.com/lonr-6/cc-desktop-switch" target="_blank" rel="noopener">CC Desktop Switch GitHub 仓库</a></li>
+                <li><a href="https://deepseek.csdn.net/69f721eb0a2f6a37c5a7a57b.html" target="_blank" rel="noopener">Windows 配置参考：Claude Code Desktop + DeepSeek</a></li>
+                <li><a href="https://deepseek.csdn.net/69f80b960a2f6a37c5a7c46f.html" target="_blank" rel="noopener">小白版参考：Claude Desktop + DeepSeek V4 指南</a></li>
               </ul>
             </section>
           </div>

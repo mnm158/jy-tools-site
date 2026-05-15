@@ -1,7 +1,7 @@
 [
   {
     "title": "Claude Code 桌面端部署与 DeepSeek 接入教程",
-    "summary": "Windows 和 macOS 上用官方安装包安装 Claude Desktop，在 Code 标签页里通过 Local 环境编辑器接入 DeepSeek 模型。",
+    "summary": "Windows 和 macOS 上用官方安装包安装 Claude Desktop，接入 DeepSeek 模型，并补充视频、Windows 图形化配置和新手权限建议。",
     "date": "2026-05-15",
     "category": "AI 工具",
     "url": "posts/claude-code-deepseek-windows-mac.html"
