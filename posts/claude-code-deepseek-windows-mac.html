@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f7f9fe">
     <meta
       name="description"
-      content="Windows 和 macOS 上部署 Claude Code 桌面端与命令行，并接入 DeepSeek 模型的完整教程。"
+      content="Windows 和 macOS 上通过官方安装包部署 Claude Code 桌面端，并接入 DeepSeek 模型的完整教程。"
     >
     <title>Claude Code 桌面端部署与 DeepSeek 接入教程 - JY工具站</title>
     <link rel="stylesheet" href="../assets/styles.css">
@@ -46,9 +46,9 @@
       <article class="article-shell">
         <header class="article-hero">
           <p class="eyebrow">Claude Code / DeepSeek</p>
-          <h1>Claude Code 桌面端如何在 Windows / Mac 上部署，并接入 DeepSeek 模型</h1>
+          <h1>Claude Code 桌面端如何用安装包部署，并接入 DeepSeek 模型</h1>
           <p class="article-lead">
-            这篇文章按小白也能跟着做的方式，把安装、验证、DeepSeek 环境变量配置、常见报错和配套视频脚本整理到一起。
+            这篇文章按小白也能跟着做的方式，避开命令行安装，直接用官方安装包完成 Windows / macOS 部署，再用桌面端的环境配置接入 DeepSeek。
           </p>
           <div class="article-meta">
             <span>发布：2026-05-15</span>
@@ -75,8 +75,9 @@
           <aside class="toc-panel" aria-label="文章目录">
             <strong>目录</strong>
             <a href="#what">先说明</a>
-            <a href="#mac">macOS 部署</a>
-            <a href="#windows">Windows 部署</a>
+            <a href="#download">下载安装包</a>
+            <a href="#mac">macOS 安装</a>
+            <a href="#windows">Windows 安装</a>
             <a href="#deepseek">接入 DeepSeek</a>
             <a href="#check">验证是否成功</a>
             <a href="#trouble">常见问题</a>
@@ -86,76 +87,85 @@
 
           <div class="article-content">
             <section id="what">
-              <h2>先说明：桌面端和 Claude Code 不是一回事</h2>
+              <h2>先说明：这篇按“安装包方式”来写</h2>
               <p>
-                Anthropic 官方现在提供图形化桌面端，也提供 Claude Code 命令行工具。桌面端适合聊天和打开 Claude Code 体验；真正把请求切到 DeepSeek，主要是通过 Claude Code 命令行的环境变量完成。
+                Anthropic 官方现在把 Chat、Cowork 和 Claude Code 放进同一个 Claude Desktop 桌面应用里。安装桌面端后，打开顶部的 Code 标签页，就可以用图形界面操作 Claude Code。
               </p>
               <div class="callout">
                 <strong>推荐做法：</strong>
-                新手先安装桌面端，确认账号和基础环境没问题；然后安装 Claude Code 命令行，再配置 DeepSeek。
+                新手不要复制网上来路不明的安装命令，直接从 <a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a> 下载官方安装包。
               </div>
             </section>
 
-            <section id="mac">
-              <h2>macOS 部署</h2>
+            <section id="download">
+              <h2>先下载官方安装包</h2>
               <ol>
-                <li>打开 Anthropic 官方页面下载 macOS 桌面端，安装后登录账号。</li>
-                <li>打开“终端”，安装 Claude Code 命令行：</li>
+                <li>打开 Claude 官方下载页：<a href="https://claude.com/download" target="_blank" rel="noopener">https://claude.com/download</a>。</li>
+                <li>macOS 用户点击 <strong>Download for macOS</strong>。</li>
+                <li>Windows 用户点击 <strong>Download for Windows</strong>；如果是 Windows ARM64 设备，选择 ARM64 版本。</li>
+                <li>下载完成后，只打开官方站点下载的安装文件，不要打开别人发来的安装包。</li>
               </ol>
-              <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
-              <p>如果你平时使用 Homebrew，也可以用下面的方式安装稳定版：</p>
-              <pre><code>brew install --cask claude-code</code></pre>
-              <p>安装完成后，检查版本：</p>
-              <pre><code>claude --version</code></pre>
-              <p>能看到版本号，就说明 Claude Code 已经装好。以后在项目文件夹里运行 <code>claude</code> 就能启动。</p>
+              <p>
+                Claude Desktop 桌面端支持 macOS 和 Windows。Linux 暂时没有桌面端，需要使用命令行版本。
+              </p>
+            </section>
+
+            <section id="mac">
+              <h2>macOS 安装</h2>
+              <ol>
+                <li>双击下载到的 Claude 安装文件。</li>
+                <li>把 Claude 拖到“应用程序”文件夹，或按安装器提示完成安装。</li>
+                <li>从“应用程序”里启动 Claude，并登录你的 Anthropic 账号。</li>
+                <li>在顶部切换到 <strong>Code</strong> 标签页。</li>
+                <li>第一次使用时，选择 <strong>Local</strong>，再选择你的项目文件夹。</li>
+              </ol>
+              <p>
+                大多数 Mac 自带 Git。后面如果 Code 标签页提示找不到 Git，再安装 Xcode Command Line Tools 或 Git 客户端即可。
+              </p>
             </section>
 
             <section id="windows">
-              <h2>Windows 部署</h2>
+              <h2>Windows 安装</h2>
               <ol>
-                <li>先安装 Windows 桌面端并登录。</li>
-                <li>建议安装 Git for Windows。官方说明里提到，原生 Windows 下有 Git Bash 会更适合 Claude Code 使用。</li>
-                <li>打开 PowerShell，执行安装命令：</li>
+                <li>双击下载到的 Claude Windows 安装包。</li>
+                <li>按安装器提示完成安装；如果弹出 UAC 权限确认，确认发布者和来源后再继续。</li>
+                <li>从开始菜单启动 Claude，并登录你的 Anthropic 账号。</li>
+                <li>安装 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a>，这是 Windows 本地 Code 会话需要的基础组件。</li>
+                <li>重启 Claude Desktop，打开顶部 <strong>Code</strong> 标签页。</li>
+                <li>第一次使用时，选择 <strong>Local</strong>，再选择你的项目文件夹。</li>
               </ol>
-              <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
-              <p>如果你习惯 WinGet，也可以使用：</p>
-              <pre><code>winget install Anthropic.ClaudeCode</code></pre>
-              <p>安装完成后检查版本：</p>
-              <pre><code>claude --version</code></pre>
               <p>
-                如果你做的是 Linux 工具链项目，也可以选择 WSL 2。普通 Windows 软件、脚本、插件项目，用原生 Windows + Git for Windows 通常更直观。
+                普通 Windows 软件、脚本、插件项目，用 Claude Desktop + Git for Windows 最直观。只有 Linux 工具链项目才优先考虑 WSL。
               </p>
             </section>
 
             <section id="deepseek">
               <h2>接入 DeepSeek 模型</h2>
               <p>
-                先到 DeepSeek Platform 创建 API Key。下面的命令里不要把 <code>&lt;your DeepSeek API Key&gt;</code> 原样复制，必须替换成你自己的 Key。
+                先到 DeepSeek Platform 创建 API Key。桌面端不需要用终端 export 变量，可以直接在 Code 标签页的 Local 环境编辑器里填写。
               </p>
 
-              <h3>macOS 临时生效</h3>
-              <pre><code>export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
-export ANTHROPIC_AUTH_TOKEN=&lt;your DeepSeek API Key&gt;
-export ANTHROPIC_MODEL=deepseek-v4-pro[1m]
-export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4-pro[1m]
-export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro[1m]
-export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash
-export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flash
-export CLAUDE_CODE_EFFORT_LEVEL=max</code></pre>
+              <h3>在桌面端填写环境变量</h3>
+              <ol>
+                <li>打开 Claude Desktop 的 <strong>Code</strong> 标签页。</li>
+                <li>在输入框附近找到 <strong>Environment</strong> 下拉菜单。</li>
+                <li>鼠标放到 <strong>Local</strong> 上，点击齿轮图标，打开 Local environment editor。</li>
+                <li>逐条新增下面这些变量。左边填变量名，右边填变量值。</li>
+                <li>保存后新建一个 Local 会话，或重启当前会话让配置生效。</li>
+              </ol>
 
-              <h3>Windows PowerShell 临时生效</h3>
-              <pre><code>$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
-$env:ANTHROPIC_AUTH_TOKEN="&lt;your DeepSeek API Key&gt;"
-$env:ANTHROPIC_MODEL="deepseek-v4-pro[1m]"
-$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-v4-pro[1m]"
-$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-v4-pro[1m]"
-$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-v4-flash"
-$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-v4-flash"
-$env:CLAUDE_CODE_EFFORT_LEVEL="max"</code></pre>
+              <pre><code>ANTHROPIC_BASE_URL = https://api.deepseek.com/anthropic
+ANTHROPIC_AUTH_TOKEN = &lt;your DeepSeek API Key&gt;
+ANTHROPIC_MODEL = deepseek-v4-pro[1m]
+ANTHROPIC_DEFAULT_OPUS_MODEL = deepseek-v4-pro[1m]
+ANTHROPIC_DEFAULT_SONNET_MODEL = deepseek-v4-pro[1m]
+ANTHROPIC_DEFAULT_HAIKU_MODEL = deepseek-v4-flash
+CLAUDE_CODE_SUBAGENT_MODEL = deepseek-v4-flash
+CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
 
               <div class="callout warning">
                 <strong>注意：</strong>
-                临时环境变量只在当前终端窗口生效。确认能跑通以后，再考虑写入 <code>~/.zshrc</code>、PowerShell Profile 或系统环境变量。
+                <code>&lt;your DeepSeek API Key&gt;</code> 必须换成你自己的 Key。录屏、截图、发文章时都要遮住真实 Key。
               </div>
 
               <p>
@@ -165,10 +175,7 @@ $env:CLAUDE_CODE_EFFORT_LEVEL="max"</code></pre>
 
             <section id="check">
               <h2>验证是否成功</h2>
-              <p>进入一个测试项目文件夹，然后启动 Claude Code：</p>
-              <pre><code>cd /path/to/my-project
-claude</code></pre>
-              <p>可以输入这句话测试：</p>
+              <p>在 Code 标签页里选择一个测试项目文件夹，建议先用“Ask permissions”权限模式。然后输入这句话测试：</p>
               <pre><code>请读取当前项目结构，用中文总结这个项目是做什么的，不要修改文件。</code></pre>
               <p>
                 如果它能正常回答，并且 DeepSeek 控制台里能看到 API 用量，就说明 Claude Code 已经走 DeepSeek 后端了。
@@ -177,14 +184,14 @@ claude</code></pre>
 
             <section id="trouble">
               <h2>常见问题</h2>
-              <h3>1. Windows 提示命令不可用</h3>
+              <h3>1. Code 标签页打不开或提示需要升级</h3>
               <p>
-                先确认你用的是 PowerShell 还是 CMD。PowerShell 提示符一般以 <code>PS C:\</code> 开头，CMD 则没有 <code>PS</code>。两者安装命令不一样。
+                先确认 Claude Desktop 是最新版本，并确认账号套餐支持 Claude Code。官方文档说明 Claude Code 桌面端需要 Pro、Max、Team 或 Enterprise 订阅。
               </p>
 
-              <h3>2. 输入 claude 后提示找不到命令</h3>
+              <h3>2. Windows 提示 Git required</h3>
               <p>
-                关闭终端重新打开，再执行 <code>claude --version</code>。如果还不行，检查安装过程有没有报错，或者 PATH 是否已经刷新。
+                安装 Git for Windows，安装完成后完全退出 Claude Desktop，再重新打开。
               </p>
 
               <h3>3. API Key 不要放进项目文件</h3>
@@ -205,17 +212,23 @@ claude</code></pre>
               <p>
                 优先检查 DeepSeek 平台当前支持的模型名和你的账号权限。如果 <code>deepseek-v4-pro[1m]</code> 不可用，可以先改成 <code>deepseek-v4-pro</code> 或 <code>deepseek-v4-flash</code> 验证。
               </p>
+
+              <h3>5. 仍然想用命令行怎么办</h3>
+              <p>
+                命令行安装仍然是官方支持的备用方案，但这篇文章不把它作为主流程。你只想用安装包的话，按上面的 Claude Desktop 流程即可。
+              </p>
             </section>
 
             <section id="video-script">
               <h2>配套视频内容脚本</h2>
               <ol>
-                <li>开场：说明本期做 Claude Code 桌面端安装，并把 Claude Code 请求切到 DeepSeek。</li>
-                <li>展示 macOS 安装：打开官网、安装桌面端、终端执行安装命令、运行 <code>claude --version</code>。</li>
-                <li>展示 Windows 安装：安装桌面端、说明 Git for Windows、PowerShell 执行安装命令。</li>
+                <li>开场：说明本期只用安装包，不用命令行安装 Claude Code。</li>
+                <li>展示下载页：打开 <code>claude.com/download</code>，分别指出 macOS、Windows、Windows ARM64。</li>
+                <li>展示 macOS 安装：下载、打开安装包、启动 Claude、进入 Code 标签页。</li>
+                <li>展示 Windows 安装：下载、运行安装包、安装 Git for Windows、重启 Claude、进入 Code 标签页。</li>
                 <li>展示 DeepSeek：进入平台创建 API Key，但录屏时遮住 Key。</li>
-                <li>复制环境变量：分别演示 macOS 和 Windows PowerShell 的配置。</li>
-                <li>进入测试项目运行 <code>claude</code>，让它只读取项目并总结，不修改文件。</li>
+                <li>展示桌面端 Local 环境编辑器：逐条填写 DeepSeek 环境变量。</li>
+                <li>进入测试项目，让 Claude 只读取项目并总结，不修改文件。</li>
                 <li>结尾：提醒不要泄露 API Key，后续可把配置写入启动脚本或系统环境变量。</li>
               </ol>
             </section>
@@ -223,9 +236,11 @@ claude</code></pre>
             <section id="sources">
               <h2>参考资料</h2>
               <ul class="source-list">
-                <li><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Claude Code 官方安装文档</a></li>
+                <li><a href="https://claude.com/download" target="_blank" rel="noopener">Claude 官方下载页</a></li>
+                <li><a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener">Claude Code Desktop 快速开始</a></li>
+                <li><a href="https://code.claude.com/docs/en/desktop" target="_blank" rel="noopener">Claude Code Desktop 使用说明</a></li>
+                <li><a href="https://support.claude.com/en/articles/10065433-install-claude-desktop" target="_blank" rel="noopener">Claude Desktop 安装帮助</a></li>
                 <li><a href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noopener">Claude Code 环境变量文档</a></li>
-                <li><a href="https://code.claude.com/docs/en/settings" target="_blank" rel="noopener">Claude Code settings 文档</a></li>
                 <li><a href="https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code" target="_blank" rel="noopener">DeepSeek 官方 Claude Code 接入指南</a></li>
                 <li><a href="https://api-docs.deepseek.com/guides/anthropic_api" target="_blank" rel="noopener">DeepSeek Anthropic API 兼容说明</a></li>
               </ul>
