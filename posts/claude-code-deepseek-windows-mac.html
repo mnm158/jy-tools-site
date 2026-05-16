@@ -124,9 +124,9 @@
             </section>
 
             <section id="prep">
-              <h2>安装前准备：Windows 先确认 Git 和虚拟机平台</h2>
+              <h2>安装前准备：Windows 先确认 Git、Node.js 场景和虚拟机平台</h2>
               <p>
-                Windows 用户最容易漏掉这一步。Claude Code 不是普通聊天软件，它会读取项目、运行工具、查看文件变化，所以建议先把 Git 和 Windows 虚拟化能力准备好。
+                Windows 用户最容易漏掉这一步。Claude Code 不是普通聊天软件，它会读取项目、运行工具、查看文件变化，所以建议先把 Git 准备好，再判断自己是否需要 Node.js 或 WSL。
               </p>
 
               <h3>1. 本地 Windows 路线：先装 Git for Windows</h3>
@@ -145,7 +145,24 @@
                 备用包是为了下载方便保留的 64 位 Windows 安装包。如果你的电脑是 ARM64，或者以后 Git 版本更新，仍然建议回到官方页面选择对应版本。
               </div>
 
-              <h3>2. WSL 路线：需要打开虚拟机平台</h3>
+              <h3>2. Node.js：桌面端不必装，命令行/npm 路线才需要</h3>
+              <p>
+                如果你只使用 Claude Desktop 顶部的 <strong>Code</strong> 标签页，官方桌面端已经内置 Claude Code，不需要为了这个主流程单独安装 Node.js。
+              </p>
+              <p>
+                下面几种情况才需要装 Node.js 18 或更高版本：
+              </p>
+              <ol>
+                <li>你准备在终端里用 <code>npm install -g @anthropic-ai/claude-code</code> 安装命令行版。</li>
+                <li>你准备在 WSL 里运行 <code>claude</code>，这时 Node.js 要装在 WSL 的 Linux 环境里，而不是只装 Windows 版。</li>
+                <li>你要运行某些依赖 npm 的第三方工具、项目脚本或开发环境。</li>
+              </ol>
+              <div class="callout">
+                <strong>新手下载方式：</strong>
+                需要 Node.js 时，打开 <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js 官方下载页</a>，选择 <strong>LTS</strong> 版本的 Windows Installer，安装时保持默认选项即可。
+              </div>
+
+              <h3>3. WSL 路线：需要打开虚拟机平台</h3>
               <p>
                 如果你要用 WSL 2，也就是在 Windows 里跑 Linux 环境，需要开启 Windows 的虚拟化相关功能。普通插件、网页、小工具项目可以先走上面的 Git for Windows 路线；只有 Linux 工具链、Docker、WSL 项目才优先走 WSL。
               </p>
@@ -191,7 +208,7 @@
               </p>
               <div class="callout">
                 <strong>和网上教程的差异：</strong>
-                有些 Windows 教程会让你先安装 Node.js 18+。按 Claude 官方桌面端快速开始文档，Code 标签页已经内置 Claude Code，不需要为了桌面端单独安装 Node.js 或 CLI。只有你要在终端里使用 <code>claude</code> 命令时，才需要另外安装 CLI。
+                有些 Windows 教程会让你先安装 Node.js 18+。按 Claude 官方桌面端快速开始文档，Code 标签页已经内置 Claude Code，不需要为了桌面端主流程单独安装 Node.js 或 CLI。只有你要走 npm 命令行安装、在 WSL 里运行 <code>claude</code>，或项目本身需要 npm 时，才安装 Node.js。
               </div>
             </section>
 
@@ -342,12 +359,17 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 这是 Windows 虚拟机平台功能没有开启，常见于 WSL 2 或依赖 Linux 环境的项目。打开“启用或关闭 Windows 功能”，勾选 <strong>Virtual Machine Platform</strong>，需要 WSL 时同时勾选 <strong>Windows Subsystem for Linux</strong>，然后重启电脑。如果仍然报错，再检查 BIOS/UEFI 里的虚拟化是否开启。
               </p>
 
-              <h3>4. CC Desktop Switch 应用后没变化</h3>
+              <h3>4. Node version not supported 或 node not found</h3>
+              <p>
+                这通常说明你正在走命令行/npm 或 WSL 路线。先确认 <code>node -v</code> 显示的是 18 或更高版本。WSL 里要安装 Linux 环境自己的 Node.js；只装 Windows 版 Node.js，WSL 里不一定能正常识别。
+              </p>
+
+              <h3>5. CC Desktop Switch 应用后没变化</h3>
               <p>
                 先确认 Claude Desktop 已经完全退出，而不是只关闭窗口。新版 CC Desktop Switch 默认通过本机网关工作，所以使用第三方提供商时也要让它留在后台运行。
               </p>
 
-              <h3>5. API Key 不要放进项目文件</h3>
+              <h3>6. API Key 不要放进项目文件</h3>
               <p>
                 不要把真实 Key 写进文章、截图、视频或 GitHub 仓库。建议用环境变量保存，并在项目的 <code>.claude/settings.json</code> 里禁止读取 <code>.env</code> 等敏感文件。
               </p>
@@ -361,12 +383,12 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
   }
 }</code></pre>
 
-              <h3>6. 模型名报错</h3>
+              <h3>7. 模型名报错</h3>
               <p>
                 优先检查 DeepSeek 平台当前支持的模型名和你的账号权限。如果 <code>deepseek-v4-pro[1m]</code> 不可用，可以先改成 <code>deepseek-v4-pro</code> 或 <code>deepseek-v4-flash</code> 验证。
               </p>
 
-              <h3>7. 仍然想用命令行怎么办</h3>
+              <h3>8. 仍然想用命令行怎么办</h3>
               <p>
                 命令行安装仍然是官方支持的备用方案，但这篇文章不把它作为主流程。你只想用安装包的话，按上面的 Claude Desktop 流程即可。
               </p>
@@ -379,6 +401,7 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 <li>展示下载页：打开 <code>claude.com/download</code>，分别指出 macOS、Windows、Windows ARM64。</li>
                 <li>展示 macOS 安装：下载、打开安装包、启动 Claude、进入 Code 标签页。</li>
                 <li>展示 Windows 安装前准备：先安装 Git for Windows，说明 Git Bash 和 Git required 的关系。</li>
+                <li>解释 Node.js：桌面端 Code 标签页不必装，只有 npm 命令行、WSL 或项目脚本需要时才安装 Node.js LTS。</li>
                 <li>补充 WSL 场景：如果走 WSL 2，需要在 Windows 功能里开启 Virtual Machine Platform，并重启电脑。</li>
                 <li>展示 Windows 安装：下载、运行安装包、确认 Git 已安装、重启 Claude、进入 Code 标签页。</li>
                 <li>展示 DeepSeek：进入平台创建 API Key，但录屏时遮住 Key。</li>
@@ -398,7 +421,9 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 <li><a href="https://code.claude.com/docs/en/desktop" target="_blank" rel="noopener">Claude Code Desktop 使用说明</a></li>
                 <li><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Claude Code 官方安装与 Windows 设置说明</a></li>
                 <li><a href="https://support.claude.com/en/articles/10065433-install-claude-desktop" target="_blank" rel="noopener">Claude Desktop 安装帮助</a></li>
+                <li><a href="https://support.claude.com/en/articles/14552646-troubleshoot-claude-code-installation-and-authentication" target="_blank" rel="noopener">Claude Code 安装与登录排错</a></li>
                 <li><a href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noopener">Claude Code 环境变量文档</a></li>
+                <li><a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js 官方下载页</a></li>
                 <li><a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank" rel="noopener">Microsoft WSL 安装说明</a></li>
                 <li><a href="https://support.microsoft.com/en-gb/windows/enable-virtualization-on-windows-c5578302-6e43-4b4b-a449-8ced115f58e1" target="_blank" rel="noopener">Microsoft：在 Windows 中启用虚拟化</a></li>
                 <li><a href="https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code" target="_blank" rel="noopener">DeepSeek 官方 Claude Code 接入指南</a></li>
