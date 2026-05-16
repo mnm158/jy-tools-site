@@ -87,6 +87,7 @@
             <strong>目录</strong>
             <a href="#what">先说明</a>
             <a href="#download">下载安装包</a>
+            <a href="#prep">安装前准备</a>
             <a href="#mac">macOS 安装</a>
             <a href="#windows">Windows 安装</a>
             <a href="#deepseek">接入 DeepSeek</a>
@@ -122,6 +123,40 @@
               </p>
             </section>
 
+            <section id="prep">
+              <h2>安装前准备：Windows 先确认 Git 和虚拟机平台</h2>
+              <p>
+                Windows 用户最容易漏掉这一步。Claude Code 不是普通聊天软件，它会读取项目、运行工具、查看文件变化，所以建议先把 Git 和 Windows 虚拟化能力准备好。
+              </p>
+
+              <h3>1. 本地 Windows 路线：先装 Git for Windows</h3>
+              <ol>
+                <li>打开 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows 下载页</a>，下载安装包。</li>
+                <li>安装时新手保持默认选项即可，重点是保留 <strong>Git Bash</strong>。</li>
+                <li>安装完成后，完全退出 Claude Desktop，再重新打开。</li>
+              </ol>
+              <div class="callout">
+                <strong>为什么要装 Git：</strong>
+                Claude 官方文档建议原生 Windows 使用 Git for Windows。装好后，Claude Code 可以使用 Git Bash 来执行代码项目里的常见操作；很多项目检查改动、回退修改、查看历史也都依赖 Git。没有 Git 时，Claude Code 可能退回 PowerShell，或者在某些 Code 会话里提示 Git required。
+              </div>
+
+              <h3>2. WSL 路线：需要打开虚拟机平台</h3>
+              <p>
+                如果你要用 WSL 2，也就是在 Windows 里跑 Linux 环境，需要开启 Windows 的虚拟化相关功能。普通插件、网页、小工具项目可以先走上面的 Git for Windows 路线；只有 Linux 工具链、Docker、WSL 项目才优先走 WSL。
+              </p>
+              <ol>
+                <li>打开开始菜单，搜索 <strong>启用或关闭 Windows 功能</strong>。</li>
+                <li>勾选 <strong>Virtual Machine Platform</strong>。</li>
+                <li>如果你要使用 WSL，也勾选 <strong>Windows Subsystem for Linux</strong>。</li>
+                <li>点击确定，按提示重启电脑。</li>
+                <li>如果仍然报虚拟化错误，需要进电脑 BIOS/UEFI 里开启 Intel VT-x 或 AMD-V。不会操作时不要乱改 BIOS，先找熟悉电脑的人帮忙。</li>
+              </ol>
+              <div class="callout warning">
+                <strong>新手建议：</strong>
+                你只是想用 Claude Desktop 的 Code 标签页改 Windows 本地项目时，先安装 Git for Windows 就够了；不要一上来折腾 WSL。只有看到 WSL、Docker、Linux 工具链相关报错，再处理 Virtual Machine Platform。
+              </div>
+            </section>
+
             <section id="mac">
               <h2>macOS 安装</h2>
               <ol>
@@ -141,8 +176,8 @@
               <ol>
                 <li>双击下载到的 Claude Windows 安装包。</li>
                 <li>按安装器提示完成安装；如果弹出 UAC 权限确认，确认发布者和来源后再继续。</li>
+                <li>确认已经安装 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a>。如果刚装完 Git，需要先完全退出 Claude Desktop。</li>
                 <li>从开始菜单启动 Claude，并登录你的 Anthropic 账号。</li>
-                <li>安装 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a>，这是 Windows 本地 Code 会话需要的基础组件。</li>
                 <li>重启 Claude Desktop，打开顶部 <strong>Code</strong> 标签页。</li>
                 <li>第一次使用时，选择 <strong>Local</strong>，再选择你的项目文件夹。</li>
               </ol>
@@ -294,12 +329,12 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
 
               <h3>2. Windows 提示 Git required</h3>
               <p>
-                安装 Git for Windows，安装完成后完全退出 Claude Desktop，再重新打开。
+                安装 Git for Windows，安装完成后完全退出 Claude Desktop，再重新打开。Claude 官方文档建议原生 Windows 使用 Git for Windows；有 Git Bash 时，Claude Code 会优先用它处理项目里的命令和 Git 操作。
               </p>
 
               <h3>3. Virtual Machine Platform not available</h3>
               <p>
-                这是 Windows 虚拟机平台功能没有开启。可以先按 Claude Desktop 或 Windows 提示打开“Windows 功能”，启用 <strong>Virtual Machine Platform</strong>，然后重启电脑。不会操作时，不建议直接复制管理员命令，先让熟悉 Windows 的人帮你确认。
+                这是 Windows 虚拟机平台功能没有开启，常见于 WSL 2 或依赖 Linux 环境的项目。打开“启用或关闭 Windows 功能”，勾选 <strong>Virtual Machine Platform</strong>，需要 WSL 时同时勾选 <strong>Windows Subsystem for Linux</strong>，然后重启电脑。如果仍然报错，再检查 BIOS/UEFI 里的虚拟化是否开启。
               </p>
 
               <h3>4. CC Desktop Switch 应用后没变化</h3>
@@ -338,7 +373,9 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 <li>开场：说明本期只用安装包，不用命令行安装 Claude Code。</li>
                 <li>展示下载页：打开 <code>claude.com/download</code>，分别指出 macOS、Windows、Windows ARM64。</li>
                 <li>展示 macOS 安装：下载、打开安装包、启动 Claude、进入 Code 标签页。</li>
-                <li>展示 Windows 安装：下载、运行安装包、安装 Git for Windows、重启 Claude、进入 Code 标签页。</li>
+                <li>展示 Windows 安装前准备：先安装 Git for Windows，说明 Git Bash 和 Git required 的关系。</li>
+                <li>补充 WSL 场景：如果走 WSL 2，需要在 Windows 功能里开启 Virtual Machine Platform，并重启电脑。</li>
+                <li>展示 Windows 安装：下载、运行安装包、确认 Git 已安装、重启 Claude、进入 Code 标签页。</li>
                 <li>展示 DeepSeek：进入平台创建 API Key，但录屏时遮住 Key。</li>
                 <li>展示桌面端 Local 环境编辑器：逐条填写 DeepSeek 环境变量。</li>
                 <li>补充 Windows 可选路线：展示 CC Desktop Switch 下载、添加 DeepSeek、应用到 Claude Desktop。</li>
@@ -354,8 +391,11 @@ CLAUDE_CODE_EFFORT_LEVEL = max</code></pre>
                 <li><a href="https://claude.com/download" target="_blank" rel="noopener">Claude 官方下载页</a></li>
                 <li><a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener">Claude Code Desktop 快速开始</a></li>
                 <li><a href="https://code.claude.com/docs/en/desktop" target="_blank" rel="noopener">Claude Code Desktop 使用说明</a></li>
+                <li><a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Claude Code 官方安装与 Windows 设置说明</a></li>
                 <li><a href="https://support.claude.com/en/articles/10065433-install-claude-desktop" target="_blank" rel="noopener">Claude Desktop 安装帮助</a></li>
                 <li><a href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noopener">Claude Code 环境变量文档</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank" rel="noopener">Microsoft WSL 安装说明</a></li>
+                <li><a href="https://support.microsoft.com/en-gb/windows/enable-virtualization-on-windows-c5578302-6e43-4b4b-a449-8ced115f58e1" target="_blank" rel="noopener">Microsoft：在 Windows 中启用虚拟化</a></li>
                 <li><a href="https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code" target="_blank" rel="noopener">DeepSeek 官方 Claude Code 接入指南</a></li>
                 <li><a href="https://api-docs.deepseek.com/guides/anthropic_api" target="_blank" rel="noopener">DeepSeek Anthropic API 兼容说明</a></li>
                 <li><a href="https://github.com/lonr-6/cc-desktop-switch" target="_blank" rel="noopener">CC Desktop Switch GitHub 仓库</a></li>
