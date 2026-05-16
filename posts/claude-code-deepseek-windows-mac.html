@@ -131,13 +131,18 @@
 
               <h3>1. 本地 Windows 路线：先装 Git for Windows</h3>
               <ol>
-                <li>打开 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows 下载页</a>，下载安装包。</li>
+                <li>优先打开 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows 官方下载页</a>，下载安装包。</li>
+                <li>如果官方下载很慢，可以用本站备用包：<a href="https://raw.githubusercontent.com/mnm158/jy-tools-site/media/git-for-windows-2.54.0-64-bit.exe" target="_blank" rel="noopener">Git for Windows 2.54.0 64-bit 安装包</a>。</li>
                 <li>安装时新手保持默认选项即可，重点是保留 <strong>Git Bash</strong>。</li>
                 <li>安装完成后，完全退出 Claude Desktop，再重新打开。</li>
               </ol>
               <div class="callout">
                 <strong>为什么要装 Git：</strong>
                 Claude 官方文档建议原生 Windows 使用 Git for Windows。装好后，Claude Code 可以使用 Git Bash 来执行代码项目里的常见操作；很多项目检查改动、回退修改、查看历史也都依赖 Git。没有 Git 时，Claude Code 可能退回 PowerShell，或者在某些 Code 会话里提示 Git required。
+              </div>
+              <div class="callout warning">
+                <strong>安装包提醒：</strong>
+                备用包是为了下载方便保留的 64 位 Windows 安装包。如果你的电脑是 ARM64，或者以后 Git 版本更新，仍然建议回到官方页面选择对应版本。
               </div>
 
               <h3>2. WSL 路线：需要打开虚拟机平台</h3>
@@ -176,7 +181,7 @@
               <ol>
                 <li>双击下载到的 Claude Windows 安装包。</li>
                 <li>按安装器提示完成安装；如果弹出 UAC 权限确认，确认发布者和来源后再继续。</li>
-                <li>确认已经安装 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a>。如果刚装完 Git，需要先完全退出 Claude Desktop。</li>
+                <li>确认已经安装 <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a>；官方下载慢时也可以使用上方本站备用安装包。如果刚装完 Git，需要先完全退出 Claude Desktop。</li>
                 <li>从开始菜单启动 Claude，并登录你的 Anthropic 账号。</li>
                 <li>重启 Claude Desktop，打开顶部 <strong>Code</strong> 标签页。</li>
                 <li>第一次使用时，选择 <strong>Local</strong>，再选择你的项目文件夹。</li>
