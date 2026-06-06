@@ -10,7 +10,7 @@
     >
     <title>JY工具站</title>
     <link rel="stylesheet" href="assets/styles.css?v=20260606-1">
-    <script defer src="assets/app.js?v=20260606-1"></script>
+    <script defer src="assets/app.js?v=20260606-2"></script>
     <script defer src="assets/analytics.js?v=20260606-1" data-config="content/site.json"></script>
   </head>
   <body>
@@ -66,9 +66,9 @@
           <div class="hero-visual" aria-label="工具站数据面板预览">
             <canvas id="hero-canvas" width="760" height="520"></canvas>
             <div class="visual-caption">
-              <span>插件发布</span>
-              <span>文章记录</span>
-              <span>GitHub 更新</span>
+              <span>插件库</span>
+              <span>教程文章</span>
+              <span>下载中心</span>
             </div>
           </div>
         </div>
@@ -84,12 +84,12 @@
           <span class="status-label">文章记录</span>
         </div>
         <div class="status-item">
-          <span class="status-number">GitHub</span>
-          <span class="status-label">网页编辑</span>
+          <span class="status-number">教程</span>
+          <span class="status-label">图文步骤</span>
         </div>
         <div class="status-item">
-          <span class="status-number">Cloudflare</span>
-          <span class="status-label">自动发布</span>
+          <span class="status-number">下载</span>
+          <span class="status-label">插件资源</span>
         </div>
       </section>
 
@@ -100,7 +100,7 @@
               <p class="eyebrow">Plugin Library</p>
               <h2>插件库</h2>
             </div>
-            <p>插件文件上传到 <code>downloads/</code> 后，把下载地址填进 <code>content/plugins.json</code> 即可开放下载。</p>
+            <p>这里会集中放我自己做的小工具和插件，后续有新版本会直接更新下载入口。</p>
           </div>
           <div class="plugin-grid" id="plugin-grid" aria-live="polite"></div>
         </div>
@@ -113,7 +113,7 @@
               <p class="eyebrow">Notes</p>
               <h2>文章与更新</h2>
             </div>
-            <p>首版先做列表入口，后续可升级成 Markdown 博客。</p>
+            <p>记录软件安装、AI 工具配置、插件使用方法和常见问题。</p>
           </div>
           <div class="post-grid" id="post-grid" aria-live="polite"></div>
         </div>
@@ -131,19 +131,19 @@
           </div>
 
           <div class="guide-panel">
-            <h3>后续怎么改</h3>
+            <h3>站点内容</h3>
             <ul>
-              <li>改站点名称和简介：编辑 <code>content/site.json</code></li>
-              <li>新增插件：编辑 <code>content/plugins.json</code></li>
-              <li>新增文章入口：编辑 <code>content/posts.json</code></li>
-              <li>GitHub 保存后，Cloudflare Pages 会自动重新发布</li>
+              <li>个人开发的小插件和工具下载</li>
+              <li>AI 工具、CAD 插件和软件配置教程</li>
+              <li>常见问题、更新记录和使用说明</li>
+              <li>后续会继续补充更多实用资源</li>
             </ul>
           </div>
 
           <div class="guide-panel analytics-panel">
             <h3>浏览统计</h3>
             <p data-analytics-note>
-              建议在 Cloudflare Pages 的 Metrics 里启用 Web Analytics，或把 Web Analytics token 填进 <code>content/site.json</code>。
+              已预留访问统计功能。配置 Cloudflare Web Analytics 后，可以在 Cloudflare 后台查看访问量和来源。
             </p>
             <span class="status-badge" data-analytics-status>待配置</span>
           </div>

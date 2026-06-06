@@ -6,9 +6,9 @@
     <meta name="theme-color" content="#f7f9fe">
     <meta
       name="description"
-      content="使用 CC Switch v3.16.1 将 DeepSeek 接入 ChatGPT/Codex，并保留 Codex 手机远程操作、官方插件和 tool_search 等能力的图形化教程。"
+      content="OpenAI Codex 通过 CC Switch v3.16.1 一站式接入 DeepSeek 等主流大模型，并保留手机远程操作、官方插件和 tool_search 等能力。"
     >
-    <title>CC Switch 将 DeepSeek 接入 ChatGPT/Codex 教程 - JY工具站</title>
+    <title>OpenAI Codex 一站式接入 DeepSeek 等主流大模型 - JY工具站</title>
     <link rel="stylesheet" href="../assets/styles.css?v=20260606-1">
     <script defer src="../assets/analytics.js?v=20260606-1" data-config="../content/site.json"></script>
     <script>
@@ -47,9 +47,9 @@
       <article class="article-shell">
         <header class="article-hero">
           <p class="eyebrow">CC Switch / DeepSeek / Codex</p>
-          <h1>用 CC Switch 将 DeepSeek 接入 ChatGPT / Codex</h1>
+          <h1>OpenAI Codex 一站式接入 DeepSeek 等主流大模型</h1>
           <p class="article-lead">
-            这篇文章按 Windows 新手也能跟着做的方式，讲清楚 CC Switch v3.16.1 如何通过本地路由把 Codex 的模型请求切到 DeepSeek，同时尽量保留 ChatGPT/Codex 官方登录、手机远程操作和官方插件能力。
+            这篇文章按 Windows 新手也能跟着做的方式，从 OpenAI Codex 下载、DeepSeek API 准备到 CC Switch v3.16.1 配置，讲清楚如何把 Codex 的模型请求切到 DeepSeek、通义千问等主流大模型，同时尽量保留 Codex 手机远程操作、官方插件和 tool_search 能力。
           </p>
           <div class="article-meta">
             <span>发布：2026-06-06</span>
@@ -59,16 +59,16 @@
         </header>
 
         <figure class="article-figure">
-          <img src="../assets/cc-switch-codex-flow.svg" alt="CC Switch 将 Codex 请求路由到 DeepSeek 的流程图">
-          <figcaption>核心逻辑：官方登录态留在 ChatGPT/Codex，模型流量经 CC Switch 转到 DeepSeek。</figcaption>
+          <img src="https://www.ytzy.net/wp-content/uploads/2026/06/OpenAI-Codex一键接入第三方API模型，彻底解决额度焦虑问题，支持deepseek等多个模-封面-1024x576.jpg" alt="OpenAI Codex 接入第三方 API 模型教程截图">
+          <figcaption>教程配图使用参考文章中的远程图片链接，实际操作以官方页面和当前软件版本为准。</figcaption>
         </figure>
 
         <div class="article-layout">
           <aside class="toc-panel" aria-label="文章目录">
             <strong>目录</strong>
-            <a href="#clarify">先说明</a>
             <a href="#why">为什么要这样接</a>
             <a href="#prepare">准备工作</a>
+            <a href="#codex">下载 Codex</a>
             <a href="#install">安装 CC Switch</a>
             <a href="#provider">添加 DeepSeek</a>
             <a href="#enhanced">开启 Codex 增强</a>
@@ -78,21 +78,10 @@
           </aside>
 
           <div class="article-content">
-            <section id="clarify">
-              <h2>先说明：这里说的不是把 ChatGPT 网页改成 DeepSeek</h2>
-              <p>
-                普通 <code>chatgpt.com</code> 聊天网页不能直接把官方模型替换成 DeepSeek。这篇文章里的“接入 ChatGPT”更准确地说，是在 <strong>ChatGPT/Codex 生态</strong>里使用 Codex：保留官方 ChatGPT/Codex 登录与远程操作能力，同时让 Codex 的模型请求通过 CC Switch 本地路由转发到 DeepSeek。
-              </p>
-              <div class="callout">
-                <strong>一句话理解：</strong>
-                ChatGPT/Codex 负责入口、登录、手机远程操作和插件能力；CC Switch 负责本地配置和协议转换；DeepSeek 负责实际模型调用。
-              </div>
-            </section>
-
             <section id="why">
               <h2>为什么要用 CC Switch 接 DeepSeek</h2>
               <p>
-                Codex 原生面向 OpenAI 的 Responses API 和 GPT 系列模型。DeepSeek、Kimi、GLM、MiniMax 等上游通常提供 OpenAI Chat Completions 兼容接口。CC Switch v3.16.x 的关键价值，就是用本地代理把 Codex 的 Responses 请求转换成 Chat Completions，再把上游返回转换回 Codex 能理解的 Responses 形态。
+                OpenAI Codex 原生面向 OpenAI 的 Responses API 和 GPT 系列模型。DeepSeek、通义千问、Kimi、GLM、MiniMax 等上游通常提供 OpenAI Chat Completions 兼容接口。CC Switch v3.16.x 的关键价值，就是用本地代理把 Codex 的 Responses 请求转换成 Chat Completions，再把上游返回转换回 Codex 能理解的 Responses 形态。
               </p>
               <div class="table-wrap">
                 <table>
@@ -126,8 +115,45 @@
 
             <section id="prepare">
               <h2>准备工作</h2>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>模块</th>
+                      <th>官方入口</th>
+                      <th>这一步要做什么</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>OpenAI Codex</td>
+                      <td>
+                        <a href="https://apps.microsoft.com/store/detail/9plm9xgg6vks?gl=cn&hl=zh-cn" target="_blank" rel="noopener">Microsoft Store 下载</a><br>
+                        <a href="https://developers.openai.com/codex" target="_blank" rel="noopener">Codex 官方文档</a>
+                      </td>
+                      <td>先安装 Codex，并确认能用 OpenAI / ChatGPT 账号正常登录。</td>
+                    </tr>
+                    <tr>
+                      <td>DeepSeek API</td>
+                      <td>
+                        <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">DeepSeek API Key</a><br>
+                        <a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API 文档</a>
+                      </td>
+                      <td>创建 API Key，后面填入 CC Switch，不要公开泄露。</td>
+                    </tr>
+                    <tr>
+                      <td>CC Switch</td>
+                      <td>
+                        <a href="https://cc-switch.cc/" target="_blank" rel="noopener">CC Switch 官方站</a><br>
+                        <a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noopener">GitHub Releases</a>
+                      </td>
+                      <td>用图形界面管理 Codex 的第三方模型供应商和本地路由。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <ol>
-                <li>安装或更新 OpenAI Codex / ChatGPT 相关客户端，并确认可以正常登录官方账号。</li>
+                <li>安装或更新 OpenAI Codex，并确认可以正常登录官方账号。</li>
                 <li>准备 DeepSeek API Key。只在 CC Switch 或环境变量里填写，不要写进公开网页、截图和 GitHub 仓库。</li>
                 <li>Windows 用户建议先准备 Git for Windows、Node.js LTS 和 Virtual Machine Platform。前一篇 Claude Code 教程里已经解释了这三项的作用。</li>
                 <li>从官方渠道下载 CC Switch。不要使用要求充值、收费或索取登录凭据的山寨站。</li>
@@ -135,6 +161,20 @@
               <div class="callout warning">
                 <strong>安全提醒：</strong>
                 CC Switch 官方发布说明强调，软件免费开源，下载优先走官网、GitHub Releases 或官方 SourceForge 镜像。任何要求你付费或交出账号密码的网站都要避开。
+              </div>
+            </section>
+
+            <section id="codex">
+              <h2>下载安装 OpenAI Codex</h2>
+              <ol>
+                <li>Windows 用户打开 <a href="https://apps.microsoft.com/store/detail/9plm9xgg6vks?gl=cn&hl=zh-cn" target="_blank" rel="noopener">Microsoft Store 的 Codex 下载页</a>。</li>
+                <li>点击 <strong>获取</strong> 或 <strong>安装</strong>，按 Microsoft Store 提示完成安装。</li>
+                <li>安装后启动 Codex，使用 OpenAI / ChatGPT 账号登录。</li>
+                <li>首次使用时先打开一个测试项目，确认 Codex 能正常创建会话、读取项目和显示模型列表。</li>
+              </ol>
+              <div class="callout">
+                <strong>下载建议：</strong>
+                Windows 端优先走 Microsoft Store。不要从陌生网盘、第三方打包站或来路不明的 npm 包下载所谓 Codex 客户端。
               </div>
             </section>
 
@@ -148,8 +188,8 @@
               </ol>
 
               <figure class="article-figure">
-                <img src="../assets/cc-switch-ui-mock.svg" alt="CC Switch 添加 DeepSeek Provider 和开启 Codex 增强的界面示意">
-                <figcaption>示意图参考教程截图表达方式绘制，实际界面以 CC Switch 当前版本为准。</figcaption>
+                <img src="https://www.ytzy.net/wp-content/uploads/2026/06/ScreenShot_2026-06-03_224819_097.png" alt="CC Switch 下载页面截图">
+                <figcaption>CC Switch 下载页面示意，实际版本号和安装包名称以 GitHub Releases 当前显示为准。</figcaption>
               </figure>
             </section>
 
@@ -167,6 +207,11 @@
                 <strong>关键点：</strong>
                 DeepSeek 不是 OpenAI Responses API 原生供应商。CC Switch 的本地路由会在中间做格式转换，所以不要只改 base URL 就结束，还要确认本地路由和模型映射是否生效。
               </div>
+
+              <figure class="article-figure">
+                <img src="https://www.ytzy.net/wp-content/uploads/2026/06/ScreenShot_2026-06-03_224913_794.png" alt="CC Switch 配置模型供应商截图">
+                <figcaption>供应商配置示意：不同版本的字段名称可能略有不同，核心是 Base URL、API Key 和模型映射。</figcaption>
+              </figure>
             </section>
 
             <section id="enhanced">
@@ -203,27 +248,22 @@
 
             <section id="trouble">
               <h2>常见问题</h2>
-              <h3>1. 普通 ChatGPT 网页能不能直接变成 DeepSeek？</h3>
-              <p>
-                不能。ChatGPT 网页本身不能直接替换成第三方模型。本文讨论的是 Codex 这类本地/远程编码工具通过 CC Switch 把模型请求路由到 DeepSeek。
-              </p>
-
-              <h3>2. 开了 DeepSeek 后手机远程操作消失了</h3>
+              <h3>1. 开了 DeepSeek 后手机远程操作消失了</h3>
               <p>
                 先确认你用的是 CC Switch v3.16.1 或更新版本，并且在设置里手动开启了 Codex 应用增强 / 官方认证保留。默认关闭时，旧式写入方式可能无法保留全部官方能力。
               </p>
 
-              <h3>3. 模型列表为空或切换后不刷新</h3>
+              <h3>2. 模型列表为空或切换后不刷新</h3>
               <p>
                 v3.16.1 修复了模型目录被清空的多个场景，但修改模型映射后仍建议重启 Codex，因为 Codex 启动时会读取模型目录。
               </p>
 
-              <h3>4. 插件、tool_search 或自定义工具不可用</h3>
+              <h3>3. 插件、tool_search 或自定义工具不可用</h3>
               <p>
                 这通常是 Chat Completions 上游返回和 Codex Responses 工具事件之间的映射问题。v3.16.1 已针对 tool_search、插件 / 连接器命名空间和自定义工具做恢复修复，优先升级到这个版本再排查。
               </p>
 
-              <h3>5. 这样做有没有风险？</h3>
+              <h3>4. 这样做有没有风险？</h3>
               <p>
                 有。CC Switch 发布说明提醒，第三方供应商 Chat 路由、OAuth 反向代理和 Claude Desktop 第三方供应商代理都需要遵守目标供应商的计费、合规和数据留存规则。生产项目、公司代码或敏感文件不要随便接到不熟悉的中转服务。
               </p>
@@ -236,9 +276,10 @@
                 <li><a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noopener">CC Switch GitHub 仓库</a></li>
                 <li><a href="https://cc-switch.cc/" target="_blank" rel="noopener">CC Switch 官方介绍页</a></li>
                 <li><a href="https://github.com/farion1231/cc-switch/blob/main/docs/release-notes/v3.16.0-en.md" target="_blank" rel="noopener">CC Switch v3.16.0 发布说明：Chat Completions 路由</a></li>
+                <li><a href="https://apps.microsoft.com/store/detail/9plm9xgg6vks?gl=cn&hl=zh-cn" target="_blank" rel="noopener">OpenAI Codex Microsoft Store 下载页</a></li>
+                <li><a href="https://developers.openai.com/codex" target="_blank" rel="noopener">OpenAI Codex 官方文档</a></li>
                 <li><a href="https://chatgpt.com/codex/mobile/" target="_blank" rel="noopener">OpenAI Codex mobile 官方页面</a></li>
-                <li><a href="https://www.ytzy.net/2061.html" target="_blank" rel="noopener">参考页：伊藤资源 CC Switch 教程截图风格</a></li>
-                <li><a href="https://developers.cloudflare.com/pages/how-to/web-analytics/" target="_blank" rel="noopener">Cloudflare Pages Web Analytics 文档</a></li>
+                <li><a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API 官方文档</a></li>
               </ul>
             </section>
           </div>
@@ -248,7 +289,7 @@
 
     <footer class="site-footer">
       <div class="page-width footer-inner">
-        <span>© 2026 JY工具站. Powered by GitHub and Cloudflare Pages.</span>
+        <span>© 2026 JY工具站. 持续更新实用工具和教程。</span>
         <a href="../index.html#home">回到首页</a>
       </div>
     </footer>

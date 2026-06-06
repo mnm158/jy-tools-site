@@ -6,12 +6,12 @@ const fallbackSite = {
     "这里会陆续放出个人插件、工具使用说明、更新记录和一些折腾经验，方便自己维护，也方便大家下载使用。",
   about:
     "这是一个从零开始维护的个人工具站，重点是让内容更新足够简单。你可以先把它当作个人主页、插件下载页和技术笔记入口。",
-  footerText: "© 2026 JY工具站. Powered by GitHub and Cloudflare Pages.",
+  footerText: "© 2026 JY工具站. 持续更新实用工具和教程。",
   analytics: {
     provider: "cloudflare",
     cloudflareToken: "",
     note:
-      "建议在 Cloudflare Pages 的 Metrics 里启用 Web Analytics，或把 Web Analytics token 填进 content/site.json。"
+      "已预留访问统计功能。配置 Cloudflare Web Analytics 后，可以在 Cloudflare 后台查看访问量和来源。"
   },
   socialLinks: [
     {
@@ -60,9 +60,9 @@ const fallbackPlugins = [
 
 const fallbackPosts = [
   {
-    title: "用 CC Switch 将 DeepSeek 接入 ChatGPT / Codex",
+    title: "OpenAI Codex 一站式接入 DeepSeek 等主流大模型",
     summary:
-      "讲清楚 CC Switch v3.16.1 如何通过本地路由把 Codex 模型请求切到 DeepSeek，并保留手机远程操作、官方插件和 tool_search 能力。",
+      "从 Codex 下载、DeepSeek API 准备到 CC Switch v3.16.1 配置，讲清楚一站式接入主流大模型的方法。",
     date: "2026-06-06",
     category: "AI 工具",
     url: "posts/cc-switch-deepseek-chatgpt-codex.html"
@@ -74,21 +74,6 @@ const fallbackPosts = [
     date: "2026-05-15",
     category: "AI 工具",
     url: "posts/claude-code-deepseek-windows-mac.html"
-  },
-  {
-    title: "网站上线记录",
-    summary: "记录 JY工具站从空目录搭建到 GitHub + Cloudflare Pages 发布的过程。",
-    date: "2026-05-04",
-    category: "建站",
-    url: "#"
-  },
-  {
-    title: "如何新增一个插件下载入口",
-    summary:
-      "只需要编辑 content/plugins.json，补充插件名称、版本、说明和下载链接。",
-    date: "2026-05-04",
-    category: "教程",
-    url: "#"
   }
 ];
 
@@ -423,7 +408,7 @@ function drawHeroCanvas(time = 0) {
 
   ctx.fillStyle = second;
   ctx.font = "700 13px system-ui, sans-serif";
-  ctx.fillText("plugins.json", panelX + 18, panelY + 54);
+  ctx.fillText("插件库", panelX + 18, panelY + 54);
 
   const rows = [
     [0.72, accents[0]],
@@ -444,9 +429,9 @@ function drawHeroCanvas(time = 0) {
 
   const nodeRadius = 22 + pulse * 3;
   const nodes = [
-    [width * 0.74, height * 0.19, theme, "GH"],
-    [width * 0.83, height * 0.38, accents[0], "CF"],
-    [width * 0.72, height * 0.58, accents[2], "JY"]
+    [width * 0.74, height * 0.19, theme, "插件"],
+    [width * 0.83, height * 0.38, accents[0], "教程"],
+    [width * 0.72, height * 0.58, accents[2], "下载"]
   ];
 
   ctx.lineWidth = 3;
@@ -461,7 +446,7 @@ function drawHeroCanvas(time = 0) {
     ctx.fillStyle = color;
     ctx.fill();
     ctx.fillStyle = "#fff";
-    ctx.font = "900 14px system-ui, sans-serif";
+    ctx.font = "900 13px system-ui, sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(label, x, y + (index === 1 ? 0 : 1));
@@ -480,10 +465,10 @@ function drawHeroCanvas(time = 0) {
   ctx.textAlign = "left";
   ctx.textBaseline = "alphabetic";
   ctx.font = "900 15px system-ui, sans-serif";
-  ctx.fillText("Cloudflare Pages", miniX + 16, miniY + 30);
+  ctx.fillText("下载中心", miniX + 16, miniY + 30);
   ctx.fillStyle = second;
   ctx.font = "700 12px system-ui, sans-serif";
-  ctx.fillText("auto deploy", miniX + 16, miniY + 52);
+  ctx.fillText("插件和资料", miniX + 16, miniY + 52);
 }
 
 function setupCanvas() {

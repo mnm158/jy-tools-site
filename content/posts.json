@@ -1,7 +1,7 @@
 [
   {
-    "title": "用 CC Switch 将 DeepSeek 接入 ChatGPT / Codex",
-    "summary": "讲清楚 CC Switch v3.16.1 如何通过本地路由把 Codex 模型请求切到 DeepSeek，并保留手机远程操作、官方插件和 tool_search 能力。",
+    "title": "OpenAI Codex 一站式接入 DeepSeek 等主流大模型",
+    "summary": "从 Codex 下载、DeepSeek API 准备到 CC Switch v3.16.1 配置，讲清楚一站式接入主流大模型的方法。",
     "date": "2026-06-06",
     "category": "AI 工具",
     "url": "posts/cc-switch-deepseek-chatgpt-codex.html"
@@ -12,19 +12,5 @@
     "date": "2026-05-15",
     "category": "AI 工具",
     "url": "posts/claude-code-deepseek-windows-mac.html"
-  },
-  {
-    "title": "网站上线记录",
-    "summary": "记录 JY工具站从空目录搭建到 GitHub + Cloudflare Pages 发布的过程。",
-    "date": "2026-05-04",
-    "category": "建站",
-    "url": "#"
-  },
-  {
-    "title": "如何新增一个插件下载入口",
-    "summary": "只需要编辑 content/plugins.json，补充插件名称、版本、说明和下载链接。",
-    "date": "2026-05-04",
-    "category": "教程",
-    "url": "#"
   }
 ]
