@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">CC Switch 配置 DeepSeek 的界面示意图</title>
+  <desc id="desc">一张教程截图风格的 CC Switch 界面示意，展示 DeepSeek Provider、Codex 应用增强和本地路由开关。</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#101a3d" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" rx="28" fill="#f7f9fe"/>
+  <g filter="url(#shadow)">
+    <rect x="92" y="76" width="1016" height="608" rx="24" fill="#ffffff" stroke="#dfe6f5"/>
+  </g>
+  <rect x="92" y="76" width="1016" height="74" rx="24" fill="#111827"/>
+  <circle cx="134" cy="113" r="9" fill="#ff5f57"/>
+  <circle cx="162" cy="113" r="9" fill="#ffbd2e"/>
+  <circle cx="190" cy="113" r="9" fill="#28c840"/>
+  <text x="234" y="121" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="900" fill="#fff">CC Switch</text>
+  <rect x="124" y="182" width="260" height="462" rx="18" fill="#f2f5fc" stroke="#dfe6f5"/>
+  <g font-family="Inter, system-ui, sans-serif">
+    <text x="154" y="228" font-size="18" font-weight="900" fill="#5b6475">Apps</text>
+    <rect x="146" y="254" width="206" height="50" rx="12" fill="#425aef"/>
+    <text x="172" y="286" font-size="18" font-weight="900" fill="#fff">Codex</text>
+    <rect x="146" y="320" width="206" height="50" rx="12" fill="#fff"/>
+    <text x="172" y="352" font-size="18" font-weight="800" fill="#5b6475">Claude Code</text>
+    <rect x="146" y="386" width="206" height="50" rx="12" fill="#fff"/>
+    <text x="172" y="418" font-size="18" font-weight="800" fill="#5b6475">Gemini CLI</text>
+  </g>
+  <g font-family="Inter, system-ui, sans-serif">
+    <text x="432" y="216" font-size="30" font-weight="900" fill="#1f2937">DeepSeek Provider</text>
+    <text x="432" y="254" font-size="18" font-weight="700" fill="#6b7280">OpenAI Chat Completions upstream</text>
+    <rect x="432" y="294" width="594" height="64" rx="14" fill="#f8fafc" stroke="#dfe6f5"/>
+    <text x="456" y="321" font-size="15" font-weight="900" fill="#697386">Base URL</text>
+    <text x="456" y="345" font-size="18" font-weight="800" fill="#111827">https://api.deepseek.com/v1</text>
+    <rect x="432" y="378" width="594" height="64" rx="14" fill="#f8fafc" stroke="#dfe6f5"/>
+    <text x="456" y="405" font-size="15" font-weight="900" fill="#697386">API Key</text>
+    <text x="456" y="429" font-size="18" font-weight="800" fill="#111827">sk-••••••••••••••••••••</text>
+    <rect x="432" y="462" width="594" height="64" rx="14" fill="#f8fafc" stroke="#dfe6f5"/>
+    <text x="456" y="489" font-size="15" font-weight="900" fill="#697386">Model Mapping</text>
+    <text x="456" y="513" font-size="18" font-weight="800" fill="#111827">gpt-5-codex → deepseek-chat / deepseek-reasoner</text>
+    <rect x="432" y="554" width="274" height="64" rx="16" fill="#eef2ff" stroke="#cfd8ff"/>
+    <text x="456" y="594" font-size="18" font-weight="900" fill="#425aef">Codex 应用增强：开启</text>
+    <rect x="732" y="554" width="294" height="64" rx="16" fill="#ecfdf5" stroke="#c8f2d8"/>
+    <text x="756" y="594" font-size="18" font-weight="900" fill="#16834f">本地路由接管：开启</text>
+  </g>
+  <g font-family="Inter, system-ui, sans-serif">
+    <rect x="432" y="650" width="594" height="3" rx="2" fill="#dfe6f5"/>
+    <text x="432" y="700" font-size="18" font-weight="800" fill="#6b7280">示意图：实际界面以 CC Switch 当前版本为准</text>
+  </g>
+</svg>

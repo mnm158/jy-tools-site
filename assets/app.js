@@ -7,6 +7,12 @@ const fallbackSite = {
   about:
     "这是一个从零开始维护的个人工具站，重点是让内容更新足够简单。你可以先把它当作个人主页、插件下载页和技术笔记入口。",
   footerText: "© 2026 JY工具站. Powered by GitHub and Cloudflare Pages.",
+  analytics: {
+    provider: "cloudflare",
+    cloudflareToken: "",
+    note:
+      "建议在 Cloudflare Pages 的 Metrics 里启用 Web Analytics，或把 Web Analytics token 填进 content/site.json。"
+  },
   socialLinks: [
     {
       name: "GitHub",
@@ -53,6 +59,22 @@ const fallbackPlugins = [
 ];
 
 const fallbackPosts = [
+  {
+    title: "用 CC Switch 将 DeepSeek 接入 ChatGPT / Codex",
+    summary:
+      "讲清楚 CC Switch v3.16.1 如何通过本地路由把 Codex 模型请求切到 DeepSeek，并保留手机远程操作、官方插件和 tool_search 能力。",
+    date: "2026-06-06",
+    category: "AI 工具",
+    url: "posts/cc-switch-deepseek-chatgpt-codex.html"
+  },
+  {
+    title: "Claude Code 桌面端部署与 DeepSeek 接入教程",
+    summary:
+      "Windows 和 macOS 上用官方安装包安装 Claude Desktop，接入 DeepSeek 模型，并补充视频、Windows 图形化配置和新手权限建议。",
+    date: "2026-05-15",
+    category: "AI 工具",
+    url: "posts/claude-code-deepseek-windows-mac.html"
+  },
   {
     title: "网站上线记录",
     summary: "记录 JY工具站从空目录搭建到 GitHub + Cloudflare Pages 发布的过程。",
@@ -124,6 +146,8 @@ function applySiteContent() {
   const intro = $("[data-intro]");
   const about = $("[data-about]");
   const footer = $("[data-footer-text]");
+  const analyticsStatus = $("[data-analytics-status]");
+  const analyticsNote = $("[data-analytics-note]");
 
   if (heroTitle) heroTitle.textContent = site.siteName || fallbackSite.siteName;
   if (domain) domain.textContent = site.domain || fallbackSite.domain;
@@ -131,6 +155,15 @@ function applySiteContent() {
   if (intro) intro.textContent = site.intro || fallbackSite.intro;
   if (about) about.textContent = site.about || fallbackSite.about;
   if (footer) footer.textContent = site.footerText || fallbackSite.footerText;
+  if (analyticsStatus) {
+    analyticsStatus.textContent = site.analytics?.cloudflareToken ? "已启用" : "待配置";
+  }
+  if (analyticsNote) {
+    analyticsNote.innerHTML = escapeHtml(site.analytics?.note || fallbackSite.analytics.note).replace(
+      "content/site.json",
+      "<code>content/site.json</code>"
+    );
+  }
 
   const socialWrap = $("[data-social-links]");
   if (socialWrap) {

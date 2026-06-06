@@ -9,8 +9,9 @@
       content="JY工具站，一个用于发布个人插件、工具教程和技术记录的静态网站。"
     >
     <title>JY工具站</title>
-    <link rel="stylesheet" href="assets/styles.css?v=20260516-1">
-    <script defer src="assets/app.js?v=20260515-4"></script>
+    <link rel="stylesheet" href="assets/styles.css?v=20260606-1">
+    <script defer src="assets/app.js?v=20260606-1"></script>
+    <script defer src="assets/analytics.js?v=20260606-1" data-config="content/site.json"></script>
   </head>
   <body>
     <header class="site-header">
@@ -137,6 +138,14 @@
               <li>新增文章入口：编辑 <code>content/posts.json</code></li>
               <li>GitHub 保存后，Cloudflare Pages 会自动重新发布</li>
             </ul>
+          </div>
+
+          <div class="guide-panel analytics-panel">
+            <h3>浏览统计</h3>
+            <p data-analytics-note>
+              建议在 Cloudflare Pages 的 Metrics 里启用 Web Analytics，或把 Web Analytics token 填进 <code>content/site.json</code>。
+            </p>
+            <span class="status-badge" data-analytics-status>待配置</span>
           </div>
         </div>
       </section>

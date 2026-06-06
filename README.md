@@ -87,6 +87,27 @@
 "url": "posts/claude-code-deepseek-windows-mac.html"
 ```
 
+## 怎么查看浏览人数
+
+本站已经预留了 Cloudflare Web Analytics 统计脚本。没有填写 token 时，脚本不会加载，也不会影响网页打开。
+
+如果要统计浏览人数：
+
+1. 打开 Cloudflare Dashboard。
+2. 进入 Web Analytics，或者在 Pages 项目的 Metrics / Analytics 里开启 Web Analytics。
+3. 新增站点 `jyyyyy.dpdns.org`，复制 Cloudflare 给你的 token。
+4. 打开 `content/site.json`，把 token 填到这里：
+
+```json
+"analytics": {
+  "provider": "cloudflare",
+  "cloudflareToken": "这里换成你的 Cloudflare Web Analytics token",
+  "note": "Cloudflare Web Analytics 已启用，可以在 Cloudflare 后台查看访问量。"
+}
+```
+
+提交到 GitHub 后，Cloudflare Pages 自动发布。之后访问量、访客来源、页面浏览等数据在 Cloudflare 后台查看。
+
 ## 怎么发布到 Cloudflare Pages
 
 1. 在 GitHub 新建一个仓库，例如 `jy-tools-site`。

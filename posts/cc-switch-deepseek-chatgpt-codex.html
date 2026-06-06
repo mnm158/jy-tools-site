@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f9fe">
+    <meta
+      name="description"
+      content="使用 CC Switch v3.16.1 将 DeepSeek 接入 ChatGPT/Codex，并保留 Codex 手机远程操作、官方插件和 tool_search 等能力的图形化教程。"
+    >
+    <title>CC Switch 将 DeepSeek 接入 ChatGPT/Codex 教程 - JY工具站</title>
+    <link rel="stylesheet" href="../assets/styles.css?v=20260606-1">
+    <script defer src="../assets/analytics.js?v=20260606-1" data-config="../content/site.json"></script>
+    <script>
+      (() => {
+        const saved = window.localStorage.getItem("jy-theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = saved || (prefersDark ? "dark" : "light");
+      })();
+    </script>
+  </head>
+  <body class="article-page">
+    <header class="site-header">
+      <nav class="nav-wrap article-nav" aria-label="主导航">
+        <a class="brand" href="../index.html#home" aria-label="返回首页">
+          <span class="brand-mark" aria-hidden="true">JY</span>
+          <span class="brand-text">JY工具站</span>
+        </a>
+
+        <div class="nav-menu">
+          <a href="../index.html#home">首页</a>
+          <a href="../index.html#plugins">插件库</a>
+          <a href="../index.html#posts">文章</a>
+          <a href="../index.html#about">关于</a>
+        </div>
+
+        <div class="nav-tools">
+          <a class="secondary-action compact-action" href="../index.html#posts">返回文章列表</a>
+          <button class="icon-button" id="article-theme-toggle" type="button" aria-label="切换深色模式" title="切换深色模式">
+            <span aria-hidden="true">◐</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <article class="article-shell">
+        <header class="article-hero">
+          <p class="eyebrow">CC Switch / DeepSeek / Codex</p>
+          <h1>用 CC Switch 将 DeepSeek 接入 ChatGPT / Codex</h1>
+          <p class="article-lead">
+            这篇文章按 Windows 新手也能跟着做的方式，讲清楚 CC Switch v3.16.1 如何通过本地路由把 Codex 的模型请求切到 DeepSeek，同时尽量保留 ChatGPT/Codex 官方登录、手机远程操作和官方插件能力。
+          </p>
+          <div class="article-meta">
+            <span>发布：2026-06-06</span>
+            <span>分类：AI 工具</span>
+            <span>适用：Windows 10/11、macOS、Linux</span>
+          </div>
+        </header>
+
+        <figure class="article-figure">
+          <img src="../assets/cc-switch-codex-flow.svg" alt="CC Switch 将 Codex 请求路由到 DeepSeek 的流程图">
+          <figcaption>核心逻辑：官方登录态留在 ChatGPT/Codex，模型流量经 CC Switch 转到 DeepSeek。</figcaption>
+        </figure>
+
+        <div class="article-layout">
+          <aside class="toc-panel" aria-label="文章目录">
+            <strong>目录</strong>
+            <a href="#clarify">先说明</a>
+            <a href="#why">为什么要这样接</a>
+            <a href="#prepare">准备工作</a>
+            <a href="#install">安装 CC Switch</a>
+            <a href="#provider">添加 DeepSeek</a>
+            <a href="#enhanced">开启 Codex 增强</a>
+            <a href="#verify">验证是否成功</a>
+            <a href="#trouble">常见问题</a>
+            <a href="#sources">参考资料</a>
+          </aside>
+
+          <div class="article-content">
+            <section id="clarify">
+              <h2>先说明：这里说的不是把 ChatGPT 网页改成 DeepSeek</h2>
+              <p>
+                普通 <code>chatgpt.com</code> 聊天网页不能直接把官方模型替换成 DeepSeek。这篇文章里的“接入 ChatGPT”更准确地说，是在 <strong>ChatGPT/Codex 生态</strong>里使用 Codex：保留官方 ChatGPT/Codex 登录与远程操作能力，同时让 Codex 的模型请求通过 CC Switch 本地路由转发到 DeepSeek。
+              </p>
+              <div class="callout">
+                <strong>一句话理解：</strong>
+                ChatGPT/Codex 负责入口、登录、手机远程操作和插件能力；CC Switch 负责本地配置和协议转换；DeepSeek 负责实际模型调用。
+              </div>
+            </section>
+
+            <section id="why">
+              <h2>为什么要用 CC Switch 接 DeepSeek</h2>
+              <p>
+                Codex 原生面向 OpenAI 的 Responses API 和 GPT 系列模型。DeepSeek、Kimi、GLM、MiniMax 等上游通常提供 OpenAI Chat Completions 兼容接口。CC Switch v3.16.x 的关键价值，就是用本地代理把 Codex 的 Responses 请求转换成 Chat Completions，再把上游返回转换回 Codex 能理解的 Responses 形态。
+              </p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>需求</th>
+                      <th>不用 CC Switch</th>
+                      <th>使用 CC Switch</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>切换模型供应商</td>
+                      <td>手动改配置，容易写错路径或 token</td>
+                      <td>图形界面新增供应商，支持热切换和备份</td>
+                    </tr>
+                    <tr>
+                      <td>接入 DeepSeek</td>
+                      <td>Codex 不一定能直接吃 Chat Completions 上游</td>
+                      <td>本地路由做 Chat ↔ Responses 转换</td>
+                    </tr>
+                    <tr>
+                      <td>保留官方能力</td>
+                      <td>第三方 token 可能覆盖官方登录态</td>
+                      <td>v3.16.1 可手动开启 Codex 应用增强，保留官方 OAuth</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="prepare">
+              <h2>准备工作</h2>
+              <ol>
+                <li>安装或更新 OpenAI Codex / ChatGPT 相关客户端，并确认可以正常登录官方账号。</li>
+                <li>准备 DeepSeek API Key。只在 CC Switch 或环境变量里填写，不要写进公开网页、截图和 GitHub 仓库。</li>
+                <li>Windows 用户建议先准备 Git for Windows、Node.js LTS 和 Virtual Machine Platform。前一篇 Claude Code 教程里已经解释了这三项的作用。</li>
+                <li>从官方渠道下载 CC Switch。不要使用要求充值、收费或索取登录凭据的山寨站。</li>
+              </ol>
+              <div class="callout warning">
+                <strong>安全提醒：</strong>
+                CC Switch 官方发布说明强调，软件免费开源，下载优先走官网、GitHub Releases 或官方 SourceForge 镜像。任何要求你付费或交出账号密码的网站都要避开。
+              </div>
+            </section>
+
+            <section id="install">
+              <h2>下载安装 CC Switch</h2>
+              <ol>
+                <li>打开 CC Switch 官方站或 GitHub Releases。</li>
+                <li>Windows 选择 <strong>CC-Switch-v3.16.1-Windows.msi</strong>，macOS 选择对应 <code>.dmg</code>，Linux 选择 <code>.deb</code>、<code>.rpm</code> 或 AppImage。</li>
+                <li>安装后启动 CC Switch，第一次打开先看它是否识别到 Codex。</li>
+                <li>如果识别不到 Codex，先确认 Codex 已经安装并能从终端或桌面端正常启动。</li>
+              </ol>
+
+              <figure class="article-figure">
+                <img src="../assets/cc-switch-ui-mock.svg" alt="CC Switch 添加 DeepSeek Provider 和开启 Codex 增强的界面示意">
+                <figcaption>示意图参考教程截图表达方式绘制，实际界面以 CC Switch 当前版本为准。</figcaption>
+              </figure>
+            </section>
+
+            <section id="provider">
+              <h2>添加 DeepSeek 供应商</h2>
+              <ol>
+                <li>在 CC Switch 左侧选择 <strong>Codex</strong>。</li>
+                <li>点击新增供应商，优先选择内置 DeepSeek 预设；如果没有预设，就选择 OpenAI-compatible 或 Custom。</li>
+                <li><strong>Base URL</strong> 填 DeepSeek 的 OpenAI 兼容地址，通常是 <code>https://api.deepseek.com/v1</code>。</li>
+                <li><strong>API Key</strong> 填你的 DeepSeek Key。</li>
+                <li>模型映射里把 Codex 侧模型映射到 DeepSeek 模型，例如把编码任务模型映射到 <code>deepseek-chat</code> 或 <code>deepseek-reasoner</code>。</li>
+                <li>如果页面里有 <strong>Needs Local Routing</strong> 或类似“需要本地路由”的选项，连接 DeepSeek 这类 Chat Completions 上游时建议开启。</li>
+              </ol>
+              <div class="callout">
+                <strong>关键点：</strong>
+                DeepSeek 不是 OpenAI Responses API 原生供应商。CC Switch 的本地路由会在中间做格式转换，所以不要只改 base URL 就结束，还要确认本地路由和模型映射是否生效。
+              </div>
+            </section>
+
+            <section id="enhanced">
+              <h2>CC Switch v3.16.1：开启 Codex 应用增强</h2>
+              <p>
+                v3.16.1 新增了更谨慎的 Codex 增强开关，默认关闭。开启后，CC Switch 会尽量把官方 ChatGPT / Codex OAuth 登录态保留在 <code>auth.json</code>，第三方供应商 token 写到 provider 作用域配置中。这样做的目标是：模型流量走 DeepSeek，但官方登录相关能力继续保留。
+              </p>
+              <ol>
+                <li>先用官方账号登录 Codex / ChatGPT，并确认官方 Codex 能正常启动。</li>
+                <li>打开 CC Switch 设置，找到 <strong>Codex 应用增强</strong> 或类似选项。</li>
+                <li>手动开启“官方认证保留”相关开关。</li>
+                <li>回到 Codex 应用，选择 DeepSeek 供应商，并开启本地路由接管。</li>
+                <li>重启 Codex，让模型目录和 provider 显示刷新。</li>
+              </ol>
+              <div class="callout warning">
+                <strong>为什么这一步重要：</strong>
+                v3.16.1 发布说明明确提到，开启增强后可以在使用第三方 API 的情况下继续使用 Codex 的手机远程操作、官方插件等能力；同时它修复了第三方供应商切换时官方 OAuth、模型目录、tool_search、插件 / 连接器命名空间和自定义工具恢复的问题。
+              </div>
+            </section>
+
+            <section id="verify">
+              <h2>验证是否成功</h2>
+              <ol>
+                <li>在 Codex 里打开一个测试项目，不要一开始就授权重要目录。</li>
+                <li>输入：<code>请读取当前项目结构，用中文总结，不要修改文件。</code></li>
+                <li>观察 DeepSeek 控制台是否出现 API 调用。</li>
+                <li>在 Codex 里测试 <code>tool_search</code>、官方插件或连接器是否还能被发现。</li>
+                <li>打开 ChatGPT 手机 App 的 Codex 入口，检查是否还能远程查看或继续电脑上的 Codex 会话。</li>
+              </ol>
+              <p>
+                如果 DeepSeek 有用量记录，Codex 也能继续使用手机远程和插件能力，说明这条链路基本跑通。
+              </p>
+            </section>
+
+            <section id="trouble">
+              <h2>常见问题</h2>
+              <h3>1. 普通 ChatGPT 网页能不能直接变成 DeepSeek？</h3>
+              <p>
+                不能。ChatGPT 网页本身不能直接替换成第三方模型。本文讨论的是 Codex 这类本地/远程编码工具通过 CC Switch 把模型请求路由到 DeepSeek。
+              </p>
+
+              <h3>2. 开了 DeepSeek 后手机远程操作消失了</h3>
+              <p>
+                先确认你用的是 CC Switch v3.16.1 或更新版本，并且在设置里手动开启了 Codex 应用增强 / 官方认证保留。默认关闭时，旧式写入方式可能无法保留全部官方能力。
+              </p>
+
+              <h3>3. 模型列表为空或切换后不刷新</h3>
+              <p>
+                v3.16.1 修复了模型目录被清空的多个场景，但修改模型映射后仍建议重启 Codex，因为 Codex 启动时会读取模型目录。
+              </p>
+
+              <h3>4. 插件、tool_search 或自定义工具不可用</h3>
+              <p>
+                这通常是 Chat Completions 上游返回和 Codex Responses 工具事件之间的映射问题。v3.16.1 已针对 tool_search、插件 / 连接器命名空间和自定义工具做恢复修复，优先升级到这个版本再排查。
+              </p>
+
+              <h3>5. 这样做有没有风险？</h3>
+              <p>
+                有。CC Switch 发布说明提醒，第三方供应商 Chat 路由、OAuth 反向代理和 Claude Desktop 第三方供应商代理都需要遵守目标供应商的计费、合规和数据留存规则。生产项目、公司代码或敏感文件不要随便接到不熟悉的中转服务。
+              </p>
+            </section>
+
+            <section id="sources">
+              <h2>参考资料</h2>
+              <ul class="source-list">
+                <li><a href="https://sourceforge.net/projects/cc-switch.mirror/files/v3.16.1/" target="_blank" rel="noopener">CC Switch v3.16.1 发布说明</a></li>
+                <li><a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noopener">CC Switch GitHub 仓库</a></li>
+                <li><a href="https://cc-switch.cc/" target="_blank" rel="noopener">CC Switch 官方介绍页</a></li>
+                <li><a href="https://github.com/farion1231/cc-switch/blob/main/docs/release-notes/v3.16.0-en.md" target="_blank" rel="noopener">CC Switch v3.16.0 发布说明：Chat Completions 路由</a></li>
+                <li><a href="https://chatgpt.com/codex/mobile/" target="_blank" rel="noopener">OpenAI Codex mobile 官方页面</a></li>
+                <li><a href="https://www.ytzy.net/2061.html" target="_blank" rel="noopener">参考页：伊藤资源 CC Switch 教程截图风格</a></li>
+                <li><a href="https://developers.cloudflare.com/pages/how-to/web-analytics/" target="_blank" rel="noopener">Cloudflare Pages Web Analytics 文档</a></li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <span>© 2026 JY工具站. Powered by GitHub and Cloudflare Pages.</span>
+        <a href="../index.html#home">回到首页</a>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const toggle = document.querySelector("#article-theme-toggle");
+        const meta = document.querySelector('meta[name="theme-color"]');
+        const setTheme = (theme) => {
+          document.documentElement.dataset.theme = theme;
+          window.localStorage.setItem("jy-theme", theme);
+          meta?.setAttribute("content", theme === "dark" ? "#18171d" : "#f7f9fe");
+        };
+        toggle?.addEventListener("click", () => {
+          const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+          setTheme(next);
+        });
+      })();
+    </script>
+  </body>
+</html>

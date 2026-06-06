@@ -1,5 +1,12 @@
 [
   {
+    "title": "用 CC Switch 将 DeepSeek 接入 ChatGPT / Codex",
+    "summary": "讲清楚 CC Switch v3.16.1 如何通过本地路由把 Codex 模型请求切到 DeepSeek，并保留手机远程操作、官方插件和 tool_search 能力。",
+    "date": "2026-06-06",
+    "category": "AI 工具",
+    "url": "posts/cc-switch-deepseek-chatgpt-codex.html"
+  },
+  {
     "title": "Claude Code 桌面端部署与 DeepSeek 接入教程",
     "summary": "Windows 和 macOS 上用官方安装包安装 Claude Desktop，接入 DeepSeek 模型，并补充视频、Windows 图形化配置和新手权限建议。",
     "date": "2026-05-15",
