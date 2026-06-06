@@ -7,7 +7,7 @@
   "footerText": "© 2026 JY工具站. 持续更新实用工具和教程。",
   "analytics": {
     "provider": "cloudflare",
-    "cloudflareToken": "",
+    "cloudflareToken": "bcd380efd0b94b888b8fc5fea7369a99",
     "note": "已预留访问统计功能。配置 Cloudflare Web Analytics 后，可以在 Cloudflare 后台查看访问量和来源。"
   },
   "socialLinks": [
