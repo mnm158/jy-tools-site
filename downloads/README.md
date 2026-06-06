@@ -7,5 +7,6 @@
 - `downloads/baogu-jiaju-generator-v26.5.7.zip`
 - `downloads/cad-hole-checker-v26.4.30.zip`
 - `downloads/flatbar-drawing-generator-v26.5.14.zip`
+- `downloads/CC-Switch-v3.16.1-Windows.msi`
 
 文件名建议只使用英文、数字、横线和点号，避免中文文件名在部分浏览器里下载异常。
