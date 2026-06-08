@@ -66,6 +66,7 @@
             <a href="#codex">下载 Codex</a>
             <a href="#install">安装 CC Switch</a>
             <a href="#provider">添加 DeepSeek</a>
+            <a href="#restart-codex">重启 Codex</a>
             <a href="#enhanced">开启 Codex 增强</a>
             <a href="#verify">验证是否成功</a>
             <a href="#trouble">常见问题</a>
@@ -134,7 +135,7 @@
                         <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">DeepSeek API Key</a><br>
                         <a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek API 文档</a>
                       </td>
-                      <td>创建 API Key，后面填入 CC Switch，不要公开泄露。</td>
+                      <td>创建 API Key，先给 API 账户充值，最低起充金额为 10 元，后面再把 Key 填入 CC Switch 或 Codex。</td>
                     </tr>
                     <tr>
                       <td>CC Switch</td>
@@ -149,7 +150,8 @@
               </div>
               <ol>
                 <li>安装或更新 OpenAI Codex，并确认可以正常登录官方账号。</li>
-                <li>准备 DeepSeek API Key。只在 CC Switch 或环境变量里填写，不要写进公开网页、截图和 GitHub 仓库。</li>
+                <li>准备 DeepSeek API Key。DeepSeek API 需要先充值后调用，很多新手会漏掉这一步；最低起充金额为 10 元。</li>
+                <li>API Key 只在 CC Switch、Codex 或环境变量里填写，不要写进公开网页、截图和 GitHub 仓库。</li>
                 <li>Windows 用户建议先准备 Git for Windows、Node.js LTS 和 Virtual Machine Platform。前一篇 Claude Code 教程里已经解释了这三项的作用。</li>
                 <li>从官方渠道下载 CC Switch。不要使用要求充值、收费或索取登录凭据的山寨站。</li>
               </ol>
@@ -213,6 +215,28 @@
                 <img src="https://www.ytzy.net/wp-content/uploads/2026/06/ScreenShot_2026-06-03_224913_794.png" alt="CC Switch 配置模型供应商截图">
                 <figcaption>供应商配置示意：不同版本的字段名称可能略有不同，核心是 Base URL、API Key 和模型映射。</figcaption>
               </figure>
+            </section>
+
+            <section id="restart-codex">
+              <h2>重新启动 Codex，并填入 API Key</h2>
+              <p>
+                在 CC Switch 里添加 DeepSeek 供应商并保存后，先完全退出 Codex，再重新打开。重启后 Codex 会重新读取本地路由和供应商配置。如果出现 <strong>Get started with Codex</strong> 页面，按下面步骤填写。
+              </p>
+              <ol>
+                <li>在 <strong>OpenAI API key</strong> 输入框里粘贴你的 API Key。</li>
+                <li>如果你使用 CC Switch 本地路由，优先填入 CC Switch 为 Codex 准备的 Key 或它提示你填写的代理 Key。</li>
+                <li>如果页面要求直接填写模型供应商 Key，就填入 DeepSeek API Key。</li>
+                <li>确认 Key 没有多复制空格、换行或中文符号，然后点击 <strong>Continue</strong>。</li>
+                <li>进入 Codex 后新建一个测试会话，先让它只读取项目结构，不要立刻授权修改重要文件。</li>
+              </ol>
+              <figure class="article-figure">
+                <img src="../assets/codex-api-key-prompt.png" alt="Codex 启动后填写 OpenAI API key 的界面">
+                <figcaption>Codex 重启后可能会要求填写 API Key。这里不要截图公开真实 Key，填写前确认使用的是 CC Switch 或 DeepSeek 对应的 Key。</figcaption>
+              </figure>
+              <div class="callout warning">
+                <strong>新手容易错的地方：</strong>
+                DeepSeek API Key 创建后通常只完整显示一次。建议保存到密码管理器或本机安全位置；如果忘记了，只能重新创建新的 Key。
+              </div>
             </section>
 
             <section id="enhanced">
